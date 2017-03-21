@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<link type="text/css" href="main.css" rel="stylesheet">
+	<script type="text/javascript" src="game.js"></script>
+</head>
+<body>
+	<div id="overlay">
+        <div id="centered">
+          <button onclick="endoverlay(1)">Player vs. Player</button>
+		  <button onclick="endoverlay(2)">Player vs. Computer</button>
+        </div>
+	</div>
+	<script>
+        function endoverlay(x) {
+				document.getElementById("overlay").className = 'fade';
+				mode = x;
+        }
+
+				
+        function creategame() {
+            var wholefield = document.createElement("div");
+            wholefield.id = "wholefield"
+            for (var i=0; i<15; i++) {
+                var row = document.createElement("div");
+                row.className = "row"
+                wholefield.appendChild(row);
+                for (var k=1; k<=15; k++)  {
+                    var field = document.createElement("div");
+                    field.className = "field";
+                    field.id = i*15 + k;
+                    field.addEventListener("click", function() {
+                        if (!this.classList.contains('filled')) {
+                            ppclick(this);
+                            this.classList.add('filled');
+                        }
+                    });
+                    row.appendChild(field);
+                }
+            }
+            document.body.appendChild(wholefield);
+        }
+			creategame();
+	</script>
+</body>
+</html>
