@@ -25,6 +25,11 @@ body, html {
 	border: 1px solid black;
 	/*background-size: 100% 100%;*/
 }
+
+.field:hover {
+    background-color: #a8e6ed;
+}
+
 #overlay {
 	right: 0;
 	left: 0;
