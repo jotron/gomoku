@@ -31,7 +31,7 @@ function check() {
       var v_whotries = 42;
       for (var k = 0; k < 15; k++) {
         var h_subject = ultimatefield[i * 15 + k];
-        var v_subject = ultimatefield[i + (k - 1) * 15];
+        var v_subject = ultimatefield[i + k * 15];
         if (h_subject !== 0) {
           if (h_subject === h_whotries) {
             h_followers++;

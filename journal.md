@@ -42,6 +42,8 @@ Nächstes Mal:
 
 ## 23.3.17
 Früher diese Woche habe ich mein Projekt auf liquidforce.guru.ksz.ch und GitHub hochgeladen.
+Dies ist das erste Mal, dass ich Git aktiv benutze. 
 In der Lektion habe ich den Hover Effekt im Css programmiert.
 Zudem habe ich die diagonale Check-Funktion korrigiert.
+Zuhause habe ich GitHub pages noch konfiguriert.
 
