@@ -47,3 +47,15 @@ In der Lektion habe ich den Hover Effekt im Css programmiert.
 Zudem habe ich die diagonale Check-Funktion korrigiert.
 Zuhause habe ich GitHub pages noch konfiguriert.
 
+##24.3.17
+
+Heute habe ich einen Zufallsgegner implementiert.
+
+Ongoing Tasks:
+
+- "Fail"-GIF wenn Computer gewinnt
+- Guter Gegner-Algorithmus
+- schöneeres und mobilfreundlicheres Layout
+    - insebesonders apple spezifisch (z.b App-Icon)
+- Experimentieren mit Real-Time-Online-Modus
+

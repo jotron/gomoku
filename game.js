@@ -5,18 +5,37 @@ var color1 = '#F1E0C5';
 var color2 = '#F2545B';
 
 var whosturn = 1;
-function ppclick(field) {
-  if (whosturn === 1) {
-    field.style.backgroundColor = color1;
-    ultimatefield[field.id] = whosturn;
-    whosturn = 2;
-  } 
-  else {
-    field.style.backgroundColor = color2;
-    ultimatefield[field.id] = whosturn;
-    whosturn = 1;
-  }
-  check();
+function pclick(field) {
+	//Player Mode
+	if (mode === 1) {
+		if (whosturn === 1) {
+    		field.style.backgroundColor = color1;
+    		ultimatefield[field.id] = whosturn;
+    		whosturn = 2;
+  		} 
+  		else {
+    		field.style.backgroundColor = color2;
+    		ultimatefield[field.id] = whosturn;
+    		whosturn = 1;
+  		}
+  		check();
+	}
+		
+	//Computer Mode
+	else if (mode === 2) {
+    	field.style.backgroundColor = color1;
+    	ultimatefield[field.id] = 1;
+		check();
+	
+		var play = Math.floor(Math.random() * 225);
+		while (document.getElementById(play).classList.contains('filled')) {
+			play = Math.floor(Math.random() * 225);
+		}
+		document.getElementById(play).classList.add('filled');
+    	document.getElementById(play).style.backgroundColor = color2;
+    	ultimatefield[play] = 2;
+  		check();
+  	} 
 }
 
 function check() {
