@@ -6,6 +6,8 @@ var color2 = '#F2545B';
 
 var whosturn = 1;
 function pclick(field) {
+	
+	var winner = 0;
 	//Player Mode
 	if (mode === 1) {
 		if (whosturn === 1) {
@@ -18,27 +20,36 @@ function pclick(field) {
     		ultimatefield[field.id] = whosturn;
     		whosturn = 1;
   		}
-  		check();
+  		winner = check(ultimatefield);
+		if (winner !== 0) {
+    		declarewinner(winner);
+			return 0;
+  		}
 	}
 		
 	//Computer Mode
 	else if (mode === 2) {
     	field.style.backgroundColor = color1;
     	ultimatefield[field.id] = 1;
-		check();
+		winner = check(ultimatefield);
+		if (winner !== 0) {
+			declarewinner(winner);
+			return 0;
+  		}
 	
-		var play = Math.floor(Math.random() * 225);
-		while (document.getElementById(play).classList.contains('filled')) {
-			play = Math.floor(Math.random() * 225);
-		}
+		var play = ai(ultimatefield);
 		document.getElementById(play).classList.add('filled');
     	document.getElementById(play).style.backgroundColor = color2;
     	ultimatefield[play] = 2;
-  		check();
+  		winner = check(ultimatefield);
+		if (winner !== 0) {
+			declarewinner(winner);
+			return 0;
+  		}
   	} 
 }
 
-function check() {
+function check(field) {
   var winner = 0;
   // horizontal und vertikal
   var horizontal_and_vertical = function() {
@@ -49,8 +60,8 @@ function check() {
       var v_followers = 0;
       var v_whotries = 42;
       for (var k = 0; k < 15; k++) {
-        var h_subject = ultimatefield[i * 15 + k];
-        var v_subject = ultimatefield[i + k * 15];
+        var h_subject = field[i * 15 + k];
+        var v_subject = field[i + k * 15];
         if (h_subject !== 0) {
           if (h_subject === h_whotries) {
             h_followers++;
@@ -99,7 +110,7 @@ function check() {
 					var whotries;
 					var followers;
 					while (!right_end) {
-						subject = ultimatefield[x];
+						subject = field[x];
 						if (subject !== 0) {
 							if (subject === whotries) {
 								followers++;
@@ -131,7 +142,7 @@ function check() {
 					var whotries;
 					var followers;
 					while (!left_end) {
-						subject = ultimatefield[x];
+						subject = field[x];
 						if (subject !== 0) {
 							if (subject === whotries) {
 								followers++;
@@ -165,10 +176,7 @@ function check() {
 		};
 			winner = diagonal();
 	}
-  
-	if (winner !== 0) {
-    declarewinner(winner);
-  	}
+	return winner;
 }
 
 
@@ -200,3 +208,80 @@ function declarewinner(winner) {
 	}, (1000));
  
 }
+
+function ai(field) {
+	var play = null;
+	var wanted_depth = 4;
+	max(2, wanted_depth, field, -Infinity, Infinity);
+	
+	function max(player, depth, mfield, alpha, beta) {
+		if (depth === 0/*or keineZuegeMehr(spieler)*/) {
+       		return evaluate(field);
+		}
+		var maxvalue = alpha;
+		
+		for (var i = 0; i<225; i++) {
+			
+			if (mfield[i] === 0) {
+				mfield[i] = 2;
+				var value = min(1, depth-1, mfield, maxvalue, beta);
+				mfield[i] = 0;
+			
+				if (value > maxvalue) {
+					maxvalue = value;
+					if (maxvalue >= beta) {
+						break;
+					}
+					if (depth === wanted_depth) {
+						play = i;
+					}
+				}
+			}
+		}
+		
+		return maxvalue;
+	}
+	
+	function min(player, depth, mfield, alpha, beta) {
+		if (depth === 0/*or keineZuegeMehr(spieler)*/) {
+       		return evaluate(field);
+		}
+		var minvalue = beta;
+		
+		for (var i = 0; i<225; i++) {
+			
+			if (mfield[i] === 0) {
+				mfield[i] = 1;
+				var value = max(2, depth-1, mfield, alpha, minvalue);
+				mfield[i] = 0;
+			
+				if (value < minvalue) {
+					minvalue = value;
+					if (minvalue <= alpha) {
+						break;
+					}
+				}
+			}
+		}
+		
+		return minvalue;
+	}
+	
+	function evaluate(efield) {
+		var a = check(efield);
+		if (a === 2) {
+			return 10;
+		}
+		if (a === 1) {
+			return -10;
+		}
+		else {
+			return 0;
+		}
+	}
+	
+ 	if (play === null) {
+		alert("no other plays");
+	}
+	return play;	
+	}
