@@ -211,69 +211,96 @@ function declarewinner(winner) {
 
 function ai(field) {
 	var play = null;
-	var wanted_depth = 4;
-	max(2, wanted_depth, field, -Infinity, Infinity);
+	var wanted_depth = 2;
+	max(wanted_depth/*, -Infinity, Infinity*/);
 	
-	function max(player, depth, mfield, alpha, beta) {
+	function max(depth/*, alpha, beta*/) {
 		if (depth === 0/*or keineZuegeMehr(spieler)*/) {
-       		return evaluate(field);
+			
+       		return evaluate(depth);
 		}
-		var maxvalue = alpha;
+		var maxvalue = -Infinity; /*alpha;*/
+		
+		var surelose = true;
+		var testsurelose = 100;
+		var first = false;
+		var maybeplay = 100;
+		
+		var valuefield = new Array(225).fill([-1,-1]);
 		
 		for (var i = 0; i<225; i++) {
 			
-			if (mfield[i] === 0) {
-				mfield[i] = 2;
-				var value = min(1, depth-1, mfield, maxvalue, beta);
-				mfield[i] = 0;
-			
-				if (value > maxvalue) {
-					maxvalue = value;
-					if (maxvalue >= beta) {
+			if (field[i] === 0) {
+				field[i] = 2;
+				var value = min(depth-1/*, maxvalue, beta*/);
+				valuefield[i] = value;
+				
+				//tests for a sure lose
+				if (first === false) {
+					first = true;
+					testsurelose = value[0];
+				}
+				if (value[0] !== testsurelose) {
+					surelose = false;
+				}
+				
+				field[i] = 0;
+				document.getElementById(i).innerHTML = value;
+				if (value[0] > maxvalue) {
+					maxvalue = value[0];
+					/*if (maxvalue >= beta) {
 						break;
-					}
+					}*/
+					
 					if (depth === wanted_depth) {
 						play = i;
+						maybeplay = value[1];
 					}
 				}
 			}
+		}
+		if (surelose) {
+			play = maybeplay;
 		}
 		
 		return maxvalue;
 	}
 	
-	function min(player, depth, mfield, alpha, beta) {
+	function min(depth/*, alpha, beta*/) {
 		if (depth === 0/*or keineZuegeMehr(spieler)*/) {
-       		return evaluate(field);
+       		return evaluate(depth);
 		}
-		var minvalue = beta;
+		var minvalue = Infinity; /*beta;*/
+		var minindex = 100;
 		
 		for (var i = 0; i<225; i++) {
 			
-			if (mfield[i] === 0) {
-				mfield[i] = 1;
-				var value = max(2, depth-1, mfield, alpha, minvalue);
-				mfield[i] = 0;
+			if (field[i] === 0) {
+				field[i] = 1;
+				var value = max(depth-1/*, alpha, minvalue*/);
+				field[i] = 0;
 			
 				if (value < minvalue) {
+					
 					minvalue = value;
-					if (minvalue <= alpha) {
+					minindex = i;
+					/*if (minvalue <= alpha) {
 						break;
-					}
+					}*/
 				}
 			}
 		}
 		
-		return minvalue;
+		return [minvalue, minindex];
 	}
 	
-	function evaluate(efield) {
-		var a = check(efield);
+	function evaluate(depth) {
+		var a = check(field);
 		if (a === 2) {
-			return 10;
+			return 10 - depth;
 		}
 		if (a === 1) {
-			return -10;
+			return depth-10;
 		}
 		else {
 			return 0;
