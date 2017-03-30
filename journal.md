@@ -63,3 +63,7 @@ Ongoing Tasks:
 ## 26.3.17
 
 Heute habe ich den ersten richtigen Gegner-Algorithmus programmiert. Er basiert auf [Minimax](https://de.wikipedia.org/wiki/Minimax-Algorithmus) und [alpha-beta-pruning](https://de.wikipedia.org/wiki/Alpha-Beta-Suche). Dabei hat mir geholfen, dass ich früher schon einmal minimax bei Tic-tac-toe implementiert habe. Momentan denkt der Gegner vier Züge voraus. Die Bewertungfunktion unterscheidet lediglich Sieg, Niederlage und Unentschieden. Er rechnet allerdings ziemlich lange. Aus irgendeinem Grund rechnet er bei "schwierigen" Zügen einiges länger (bis zu 15s).
+
+
+## 30.03.17
+Heute habe ich an der AI gearbeitet. Nebenbei habe ich die Readme Datei vervollständigt.
