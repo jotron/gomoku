@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="Gomoku">
 	<meta charset="utf-8"/>
 	<link type="text/css" href="main.css" rel="stylesheet">
 	<script type="text/javascript" src="game.js"></script>
@@ -14,6 +17,7 @@
 	</div>
 	<script>
         function endoverlay(x) {
+				document.getElementById("wholefield").style.opacity = '1';
 				document.getElementById("overlay").className = 'fade';
 				mode = x;
         }
@@ -42,6 +46,10 @@
             document.body.appendChild(wholefield);
         }
 			creategame();
+		
+		document.ontouchmove = function(e){ 
+    		e.preventDefault(); 
+		}
 	</script>
 </body>
 </html>
