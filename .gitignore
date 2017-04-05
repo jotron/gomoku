@@ -1,7 +1,4 @@
-# Created by https://www.gitignore.io/api/windows,macos,dreamweaver
-
 ### Dreamweaver ###
-# DW Dreamweaver added files
 _notes
 _compareTemp
 configs/
@@ -58,4 +55,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/windows,macos,dreamweaver
+# pycharm
+.idea/
+__pycache__/

@@ -61,3 +61,14 @@ Heute habe ich den ersten richtigen Gegner-Algorithmus programmiert. Er basiert 
 
 ## 30.03.17
 Heute habe ich an der AI gearbeitet. Nebenbei habe ich die Readme Datei vervollständigt.
+
+## 5.4.17
+Heute habe ich den Algorithmus einigermassen brauchbar gemacht. Er verzweifelt jetzt in unmöglichen Situationen nicht mehr sondern spielt ins gefährlichste Feld.
+Bei 2 Zügen voraus ohne Alpha-Beta-Pruning sind es bis 8000 Auswertungen.
+Bei 2 Zügen mit Alpha-Beta-P. sind es noch 400.
+Bei 4 Zügen mit ABP sind es min. 14000.
+Interessant ist, das es scheint das der Code auf dem Server schneller läuft als auf dem Pc (unerklärlich). Vier Züge sind eigentlich optimal. Vier Züge gehen noch können aber eine Doppelfallse aushelbeln.
+Verbesserungen am Algorithmus:
+- Alpha-Beta-Pruning Zug-Sortierung.
+- eher in die Mitte spielen als oben links.
+- effizientere Auswertungsalgorithmus.

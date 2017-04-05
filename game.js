@@ -211,46 +211,39 @@ function declarewinner(winner) {
 
 function ai(field) {
 	var play = null;
-	var wanted_depth = 2;
-	max(wanted_depth/*, -Infinity, Infinity*/);
+	var wanted_depth = 4;
+	var counter = 22;
+	max(wanted_depth, -Infinity, Infinity);
 	
-	function max(depth/*, alpha, beta*/) {
+	function max(depth, alpha, beta) {
 		if (depth === 0/*or keineZuegeMehr(spieler)*/) {
 			
        		return evaluate(depth);
 		}
-		var maxvalue = -Infinity; /*alpha;*/
+		var maxvalue = alpha;
 		
 		var surelose = true;
-		var testsurelose = 100;
-		var first = false;
-		var maybeplay = 100;
+		var maybeplay = 103;
 		
-		var valuefield = new Array(225).fill([-1,-1]);
-		
-		for (var i = 0; i<225; i++) {
+		var i;
+		for (i = 0; i<225; i++) {
 			
 			if (field[i] === 0) {
 				field[i] = 2;
-				var value = min(depth-1/*, maxvalue, beta*/);
-				valuefield[i] = value;
+				var value = min(depth-1, maxvalue, beta);
 				
 				//tests for a sure lose
-				if (first === false) {
-					first = true;
-					testsurelose = value[0];
-				}
-				if (value[0] !== testsurelose) {
+				if (value[0] !== -10) {
 					surelose = false;
 				}
 				
 				field[i] = 0;
-				document.getElementById(i).innerHTML = value;
+				//document.getElementById(i).innerHTML = value;
 				if (value[0] > maxvalue) {
 					maxvalue = value[0];
-					/*if (maxvalue >= beta) {
+					if (maxvalue >= beta) {
 						break;
-					}*/
+					}
 					
 					if (depth === wanted_depth) {
 						play = i;
@@ -262,31 +255,31 @@ function ai(field) {
 		if (surelose) {
 			play = maybeplay;
 		}
-		
 		return maxvalue;
 	}
 	
-	function min(depth/*, alpha, beta*/) {
+	function min(depth, alpha, beta) {
 		if (depth === 0/*or keineZuegeMehr(spieler)*/) {
-       		return evaluate(depth);
+       		return [evaluate(depth), -1];
 		}
-		var minvalue = Infinity; /*beta;*/
+		var minvalue = beta;
 		var minindex = 100;
 		
-		for (var i = 0; i<225; i++) {
+		var i;
+		for (i = 0; i<225; i++) {
 			
 			if (field[i] === 0) {
 				field[i] = 1;
-				var value = max(depth-1/*, alpha, minvalue*/);
+				var value = max(depth-1, alpha, minvalue);
 				field[i] = 0;
 			
 				if (value < minvalue) {
 					
 					minvalue = value;
 					minindex = i;
-					/*if (minvalue <= alpha) {
+					if (minvalue <= alpha) {
 						break;
-					}*/
+					}
 				}
 			}
 		}
@@ -295,6 +288,7 @@ function ai(field) {
 	}
 	
 	function evaluate(depth) {
+		console.log("a counter");
 		var a = check(field);
 		if (a === 2) {
 			return 10 - depth;
@@ -307,8 +301,9 @@ function ai(field) {
 		}
 	}
 	
- 	if (play === null) {
-		alert("no other plays");
+ 	if (play === null || play === -1) {
+		alert("Problem: play = " + String(play));
 	}
+	console.log("roundover");
 	return play;	
 	}
