@@ -1,0 +1,6 @@
+- [] alpha-beta Zug-Sortierung
+- [] eher zentriert spielen
+- [] effizienter Auswertungsalgorithmus
+- [x] Fail Gif wenn Gegner gewinnt
+- [] nicer design
+- [] real-time online modus

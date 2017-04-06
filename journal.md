@@ -68,7 +68,10 @@ Bei 2 Zügen voraus ohne Alpha-Beta-Pruning sind es bis 8000 Auswertungen.
 Bei 2 Zügen mit Alpha-Beta-P. sind es noch 400.
 Bei 4 Zügen mit ABP sind es min. 14000.
 Interessant ist, das es scheint das der Code auf dem Server schneller läuft als auf dem Pc (unerklärlich). Vier Züge sind eigentlich optimal. Vier Züge gehen noch können aber eine Doppelfallse aushelbeln.
-Verbesserungen am Algorithmus:
+noch zu machende Verbesserungen am Algorithmus:
 - Alpha-Beta-Pruning Zug-Sortierung.
 - eher in die Mitte spielen als oben links.
 - effizientere Auswertungsalgorithmus.
+
+## 06.04.17
+Heute in der Stunde habe ich Verlierer-Gif eingebaut. Zudem habe ich angefangen den Gegner vorzugsweise in die Mitte spielen zu lassen.
