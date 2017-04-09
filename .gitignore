@@ -58,3 +58,7 @@ $RECYCLE.BIN/
 # pycharm
 .idea/
 __pycache__/
+
+#node
+node_modules/
+*.log

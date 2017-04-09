@@ -7,10 +7,10 @@ var gomoku = require("./game.js");
 app.use(express.static('ressources'));
 
 io.on('connection', function(socket){
-    console.log('a user connected');
     socket.on('request', function (data) {
+        console.time('timer');
         var play = gomoku.main(data.currentfield);
-        console.log(play);
+        console.timeEnd('timer');
         socket.emit('answer', { move: play });
     });
 });
