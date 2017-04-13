@@ -85,3 +85,5 @@ Quellen:
 - [Express.js](https://expressjs.com/de/starter/installing.html)
 - Immer wieder Stackoverflow
 - [Socket.io](https://socket.io/get-started/chat/)
+
+Schlussenlich habe ich es hingekriegt. Allerdings ist der Server schnell bei 100% CPU.

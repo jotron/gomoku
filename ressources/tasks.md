@@ -5,4 +5,5 @@
 - [ ] nicer design
 - [ ] node js server
       - [ ] realtime-online
-      - [ ] calculation on server
+      - [x] calculation on server
+- [ ] Lade-Zeichen wenn Server rechnet + man sollte nicht weiterspielen können.
