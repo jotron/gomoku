@@ -25,7 +25,7 @@ Die nächsten Male:
 Heute habe ich das Anfangsmenü mit Vex, schlussendlich simple programmiert. Ich habe lange Zeit versucht ein Menü mit mehreren ehbenbürtigen Buttons zu erstellen, habe aber aufgegeben.
 
 ## 16.3.17
-Heute habe ich das ganze mit 'vex' verworfen. Ich lasse lieber alles in Vanilla Javascript. Ich habe dementsprechend selber einen startbildschirm und endbildschirm programmiert. Soweit funktioniert das Programm einwandfrei. 
+Heute habe ich das ganze mit 'vex' verworfen. Ich lasse lieber alles in Vanilla Javascript. Ich habe dementsprechend selber einen startbildschirm und endbildschirm programmiert. Soweit funktioniert das Programm einwandfrei.
 
 Was man am Schluss noch machen muss:
 
@@ -40,7 +40,7 @@ Nächstes Mal:
 
 ## 23.3.17
 Früher diese Woche habe ich mein Projekt auf liquidforce.guru.ksz.ch und GitHub hochgeladen.
-Dies ist das erste Mal, dass ich Git aktiv benutze. 
+Dies ist das erste Mal, dass ich Git aktiv benutze.
 In der Lektion habe ich den Hover Effekt im Css programmiert.
 Zudem habe ich die diagonale Check-Funktion korrigiert.
 Zuhause habe ich GitHub pages noch konfiguriert.
@@ -87,3 +87,11 @@ Quellen:
 - [Socket.io](https://socket.io/get-started/chat/)
 
 Schlussenlich habe ich es hingekriegt. Allerdings ist der Server schnell bei 100% CPU.
+
+## -16.04.17
+Ich habe erstens validator.js implementiert. Ich hoffe mein System ist jetzt einigermassen sicher.
+Ausserdem arbeite ich an einer besseren & effizienteren check Funktion.
+
+## -21.04.17
+
+Erstens habe ich die check-Funktion stark vereinfacht und optimiert. Nun werden nur noch die vom Zug betroffenen Felder gecheckt.  Zweitens wurde der gesamte Algorithmus korrigiert.

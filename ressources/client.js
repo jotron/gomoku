@@ -21,7 +21,7 @@ function pclick(field) {
             ultimatefield[field.id] = whosturn;
             whosturn = 1;
         }
-        winner = check(ultimatefield);
+        winner = check(ultimatefield, field.id);
         if (winner !== 0) {
             declarewinner(winner);
             return 0;
@@ -32,7 +32,7 @@ function pclick(field) {
     else if (mode === 2) {
         field.style.backgroundColor = color1;
         ultimatefield[field.id] = 1;
-        winner = check(ultimatefield);
+        winner = check(ultimatefield, field.id);
         if (winner !== 0) {
             declarewinner(winner);
             return 0;
@@ -41,161 +41,89 @@ function pclick(field) {
         var play = 224;
         socket.on('answer', function (next) {
             play = next.move;
-            console.log(next);
-            console.log(play);
 
             document.getElementById(play).classList.add('filled');
             document.getElementById(play).style.backgroundColor = color2;
             ultimatefield[play] = 2;
-            winner = check(ultimatefield);
+            winner = check(ultimatefield, play);
             if (winner !== 0) {
                 declarewinner(winner);
                 return 0;
             }
-			document.getElementById('wholefield').style.pointerEvents = '';
+            document.getElementById('wholefield').style.pointerEvents = '';
             document.getElementById('loader').style.display = 'none';
         });
-		
-		//loading button and deactivate interactions while waiting
+
+        //loading button and deactivate interactions while waiting
         document.getElementById('wholefield').style.pointerEvents = 'none';
-		document.getElementById('loader').style.display = 'initial';
+        document.getElementById('loader').style.display = 'initial';
         socket.emit('request', {currentfield: ultimatefield});
     }
 }
 
-function check(field) {
-    var winner = 0;
-    // horizontal und vertikal
-    var horizontal_and_vertical = function() {
-        var i;
-        for (i = 0; i < 15; i++) {
-            var h_followers = 0;
-            var h_whotries = 42;
-            var v_followers = 0;
-            var v_whotries = 42;
-            for (var k = 0; k < 15; k++) {
-                var h_subject = field[i * 15 + k];
-                var v_subject = field[i + k * 15];
-                if (h_subject !== 0) {
-                    if (h_subject === h_whotries) {
-                        h_followers++;
-                    }
-                    else {
-                        h_whotries = h_subject;
-                        h_followers = 1;
-                    }
-                }
-                else {
-                    h_whotries = 0;
-                    h_followers = 0;
-                }
-                if (v_subject !== 0) {
-                    if (v_subject === v_whotries) {
-                        v_followers++;
-                    }
-                    else {
-                        v_whotries = v_subject;
-                        v_followers = 1;
-                    }
-                }
-                else {
-                    v_whotries = 0;
-                    v_followers = 0;
-                }
-                if (h_followers >= 5) {
-                    return h_whotries;
-                }
-                if (v_followers >= 5) {
-                    return v_whotries;
-                }
-            }
-        }
-        return 0;
-    };
-    winner = horizontal_and_vertical();
-    //diagonal
-    if (winner === 0) {
-        var diagonal = function() {
-            var returnvalue = 0;
-            //nach rechts
-            var to_the_right = function(x) {
-                var subject;
-                var right_end = false;
-                var whotries;
-                var followers;
-                while (!right_end) {
-                    subject = field[x];
-                    if (subject !== 0) {
-                        if (subject === whotries) {
-                            followers++;
-                        }
-                        else {
-                            whotries = subject;
-                            followers = 1;
-                        }
-                    }
-                    else {
-                        whotries = 0;
-                        followers = 0;
-                    }
-                    if (followers >= 5) {
-                        returnvalue = whotries;
-                        return true;
-                    }
-                    if (x >= 210 || (x+1)%15 === 0) {
-                        right_end = true;
-                    }
-                    x = x+16;
-                }
-                return false;
-            };
-            //nach links
-            var to_the_left = function(x) {
-                var subject;
-                var left_end = false;
-                var whotries;
-                var followers;
-                while (!left_end) {
-                    subject = field[x];
-                    if (subject !== 0) {
-                        if (subject === whotries) {
-                            followers++;
-                        }
-                        else {
-                            whotries = subject;
-                            followers = 1;
-                        }
-                    }
-                    else {
-                        whotries = 0;
-                        followers = 0;
-                    }
-                    if (followers >= 5) {
-                        returnvalue = whotries;
-                        return true;
-                    }
-                    if (x%15 === 0 || x >= 210) {
-                        left_end = true;
-                    }
-                    x = x+14;
-                }
-                return false;
-            };
-            var i;
-            for (i=0; i<=10;i++) {to_the_right(i);}
-            for (i=0; i<=10;i++) {to_the_right(i*15);}
-            for (i=4; i<15;i++) {to_the_left(i);}
-            for (i=1; i<=11;i++) {to_the_left((i*15)-1);}
-            return returnvalue;
-        };
-        winner = diagonal();
+function check(field, play) {
+    var whotries = field[play];
+    var h_followers = 0;
+    var h_subject = Math.floor(play/15) * 15;
+    var v_followers = 0;
+    var v_subject = play%15;
+    var dr_followers = 0;
+    var dr_subject = play;
+    var dl_followers = 0;
+    var dl_subject = play;
+
+    while (!(dr_subject%15 === 0 || dr_subject < 15)) {
+        dr_subject = dr_subject - 16;
     }
-    return winner;
+    while (!((dl_subject+1)%15 === 0 || dl_subject < 15)) {
+        dl_subject = dl_subject - 14;
+    }
+
+    for (var k = 0; k < 15; k++) {
+        if (field[h_subject] === whotries) {
+            h_followers++;
+        }
+        else {
+            h_followers = 0;
+        }
+        //
+        if (field[v_subject] === whotries) {
+            v_followers++;
+        }
+        else {
+            v_followers = 0;
+        }
+        //
+        if (field[dr_subject] === whotries) {
+            dr_followers++;
+        }
+        else {
+            dr_followers = 0;
+        }
+        //
+        if (field[dl_subject] === whotries) {
+            dl_followers++;
+        }
+        else {
+            dl_followers = 0;
+        }
+        //
+        if (h_followers >= 5 || v_followers >=5 || dr_followers>=5 || dl_followers>=5) {
+            return whotries;
+        }
+        h_subject++;
+        v_subject = v_subject + 15;
+        if ((dr_subject+1)%15 !== 0 || dr_subject < 210) {
+            dr_subject = dr_subject + 16;
+        }
+        if (dl_subject%15 !== 0 || dl_subject < 210) {
+            dl_subject = dl_subject + 14;
+        }
+    }
+    return 0;
 }
 
-
 function declarewinner(winner) {
-
     var wrapper = document.getElementById("overlay");
     setTimeout(function () {
 
