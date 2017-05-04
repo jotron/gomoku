@@ -62,7 +62,7 @@ button:hover {
 	background-color: #2B5264;
 }
 #centered {
-	height: 120px;
+	height: 180px;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
@@ -89,7 +89,7 @@ img {
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
     z-index: 8;
-	
+
 }
 
 @-webkit-keyframes spin {
@@ -101,4 +101,3 @@ img {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-		

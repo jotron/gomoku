@@ -95,3 +95,14 @@ Ausserdem arbeite ich an einer besseren & effizienteren check Funktion.
 ## -21.04.17
 
 Erstens habe ich die check-Funktion stark vereinfacht und optimiert. Nun werden nur noch die vom Zug betroffenen Felder gecheckt.  Zweitens wurde der gesamte Algorithmus korrigiert.
+
+## -27.04.17
+
+Ich habe einen alternativen Algorithmus ausprobiert. Dieser denkt überhaupt nicht voraus, ist aber trotzdem ziemlich schwer zu schlagen.
+Kennengelernt habe ich den Algorithmus schon vor Jahren. Er ist in Emacs vorinstalliert.
+- [Algorithmusquelle](https://github.com/typester/emacs/blob/master/lisp/play/gomoku.el)
+- Algemeine [Quelle](https://web.archive.org/web/20140411074912/http://chalmersgomoku.googlecode.com/files/allis1994.pdf) die mir zum Verständniss des Spiels geholfen hat
+
+## 4.05.17
+Heute habe ich auf dem SchulPC NodeJs installiert. Anschliessend habe ich versucht den qtupple-algorithmus zu korrigieren.
+Zuhause habe ich es schlussendlich auch geschafft. Zum Schluss habe ich einen merge zwischen Master und Qtupple-Approach gemacht mit 3 Optionen.
