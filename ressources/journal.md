@@ -102,3 +102,6 @@ Ich habe einen alternativen Algorithmus ausprobiert. Dieser denkt überhaupt nic
 Kennengelernt habe ich den Algorithmus schon vor Jahren. Er ist in Emacs vorinstalliert.
 - [Algorithmusquelle](https://github.com/typester/emacs/blob/master/lisp/play/gomoku.el)
 - Algemeine [Quelle](https://web.archive.org/web/20140411074912/http://chalmersgomoku.googlecode.com/files/allis1994.pdf) die mir zum Verständniss des Spiels geholfen hat
+
+## 4.05.17
+Heute habe ich auf dem SchulPC NodeJs installiert. Anschliessend habe ich versucht den qtupple-algorithmus zu korrigieren.

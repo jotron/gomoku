@@ -24,7 +24,6 @@ function pclick(field) {
         play = ai(move);
         document.getElementById(play).classList.add('filled');
         document.getElementById(play).style.backgroundColor = color2;
-        ultimatefield[play] = 2;
         winner = check(ultimatefield, play);
         if (winner !== 0) {
             declarewinner(winner);
@@ -236,86 +235,90 @@ function ai(playermove) {
         }
         return true;
     }
-    var oldfield = ultimatefield.slice(0);
-    oldfield[playermove] = 0;
+    function update(index) {
+        var oldfield = ultimatefield.slice(0);
+        oldfield[playermove] = 0;
 
+        //update scorefield horizontally and vertically
+        var h_subject = Math.floor(playermove/15) * 15;
+        var v_subject = playermove%15;
+        var i;
 
-    //update scorefield horizontally and vertically
-    var h_subject = Math.floor(playermove/15) * 15;
-    var v_subject = playermove%15;
-    var i;
+        for (i = 0; i<10; i++) {
+            var h_newvalue = evaluate([h_subject+i, h_subject+i+1,h_subject+i+2,h_subject+i+3,h_subject+i+4], ultimatefield);
+            var v_newvalue = evaluate([v_subject+(i*15), v_subject+(i+1)*15,v_subject+(i+2)*15,v_subject+(i+3)*15,v_subject+(i+4)*15], ultimatefield);
+            var h_oldvalue = evaluate([h_subject+i, h_subject+i+1,h_subject+i+2,h_subject+i+3,h_subject+i+4], oldfield);
+            var v_oldvalue = evaluate([v_subject+(i*15), v_subject+(i+1)*15,v_subject+(i+2)*15,v_subject+(i+3)*15,v_subject+(i+4)*15], oldfield);
 
-    for (i = 0; i<10; i++) {
-        var h_newvalue = evaluate([h_subject+i, h_subject+i+1,h_subject+i+2,h_subject+i+3,h_subject+i+4], ultimatefield);
-        var v_newvalue = evaluate([v_subject+(i*15), v_subject+(i+1)*15,v_subject+(i+2)*15,v_subject+(i+3)*15,v_subject+(i+4)*15], ultimatefield);
-        var h_oldvalue = evaluate([h_subject+i, h_subject+i+1,h_subject+i+2,h_subject+i+3,h_subject+i+4], oldfield);
-        var v_oldvalue = evaluate([v_subject+(i*15), v_subject+(i+1)*15,v_subject+(i+2)*15,v_subject+(i+3)*15,v_subject+(i+4)*15], oldfield);
-
-        for (var k=0; k<5;k++) {
-            if (scorefield[h_subject+i+k] !== -1) {
-                scorefield[h_subject+i+k] = scorefield[h_subject+i+k] - h_oldvalue + h_newvalue;
-            }
-            if (scorefield[v_subject+(i+k)*15] !== -1) {
-                scorefield[v_subject+(i+k)*15] = scorefield[v_subject+(i+k)*15] - v_oldvalue + v_newvalue;
-            }
-        }
-    }
-
-    // update scorefield diagonally
-    var dr_subject = playermove;
-    var dl_subject = playermove;
-    i=0;
-    while (dr_subject%15 !== 0 && dr_subject > 14 && i<4) {
-        dr_subject-=16;
-        i++;
-    }
-    i=0;
-    while ((dl_subject+1)%15 !== 0 && dl_subject > 14 && i<4) {
-        dl_subject-=14;
-        i++;
-    }
-
-    i=0;
-
-    while (possible(dr_subject, 16) && i<5) {
-        var dr_newvalue = evaluate([dr_subject, dr_subject+1*16,dr_subject+2*16,dr_subject+3*16,dr_subject+4*16], ultimatefield);
-        var dr_oldvalue = evaluate([dr_subject, dr_subject+1*16,dr_subject+2*16,dr_subject+3*16,dr_subject+4*16], oldfield);
-
-        for (k=0; k<5;k++) {
-            if (scorefield[dr_subject+k*16] !== -1) {
-                scorefield[dr_subject+k*16] = scorefield[dr_subject+k*16] - dr_oldvalue + dr_newvalue;
+            for (var k=0; k<5;k++) {
+                if (scorefield[h_subject+i+k] !== -1) {
+                    scorefield[h_subject+i+k] = scorefield[h_subject+i+k] - h_oldvalue + h_newvalue;
+                }
+                if (scorefield[v_subject+(i+k)*15] !== -1) {
+                    scorefield[v_subject+(i+k)*15] = scorefield[v_subject+(i+k)*15] - v_oldvalue + v_newvalue;
+                }
             }
         }
 
-        dr_subject += 16;
-        i++;
-    }
-
-    i=0;
-    while (possible(dl_subject, 14) && i<5) {
-        var dl_newvalue = evaluate([dl_subject, dl_subject+1*14,dl_subject+2*14,dl_subject+3*14,dl_subject+4*14], ultimatefield);
-        var dl_oldvalue = evaluate([dl_subject, dl_subject+1*14,dl_subject+2*14,dl_subject+3*14,dl_subject+4*14], oldfield);
-
-        for (k=0; k<5;k++) {
-            if (scorefield[dl_subject+k*14] !== -1) {
-                scorefield[dl_subject+k*14] = scorefield[dl_subject+k*14] - dl_oldvalue + dl_newvalue;
-            }
+        // update scorefield diagonally
+        var dr_subject = playermove;
+        var dl_subject = playermove;
+        i=0;
+        while (dr_subject%15 !== 0 && dr_subject > 14 && i<4) {
+            dr_subject-=16;
+            i++;
+        }
+        i=0;
+        while ((dl_subject+1)%15 !== 0 && dl_subject > 14 && i<4) {
+            dl_subject-=14;
+            i++;
         }
 
-        dl_subject += 14;
-        i++;
-    }
+        i=0;
 
+        while (possible(dr_subject, 16) && i<5) {
+            var dr_newvalue = evaluate([dr_subject, dr_subject+1*16,dr_subject+2*16,dr_subject+3*16,dr_subject+4*16], ultimatefield);
+            var dr_oldvalue = evaluate([dr_subject, dr_subject+1*16,dr_subject+2*16,dr_subject+3*16,dr_subject+4*16], oldfield);
+
+            for (k=0; k<5;k++) {
+                if (scorefield[dr_subject+k*16] !== -1) {
+                    scorefield[dr_subject+k*16] = scorefield[dr_subject+k*16] - dr_oldvalue + dr_newvalue;
+                }
+            }
+
+            dr_subject += 16;
+            i++;
+        }
+
+        i=0;
+        while (possible(dl_subject, 14) && i<5) {
+            var dl_newvalue = evaluate([dl_subject, dl_subject+1*14,dl_subject+2*14,dl_subject+3*14,dl_subject+4*14], ultimatefield);
+            var dl_oldvalue = evaluate([dl_subject, dl_subject+1*14,dl_subject+2*14,dl_subject+3*14,dl_subject+4*14], oldfield);
+
+            for (k=0; k<5;k++) {
+                if (scorefield[dl_subject+k*14] !== -1) {
+                    scorefield[dl_subject+k*14] = scorefield[dl_subject+k*14] - dl_oldvalue + dl_newvalue;
+                }
+            }
+
+            dl_subject += 14;
+            i++;
+        }
+    }
+    update(playermove);
+    
     // return maxindex of scorefield
     scorefield[playermove] = -1;
     var max = 224;
+    var i;
     for (i = 0; i<225; i++) {
         document.getElementById(i).innerHTML = scorefield[i];
         if (scorefield[i] > scorefield[max]) {
             max = i;
         }
     }
-    console.log(max, scorefield[max]);
     scorefield[max] = -1;
+    ultimatefield[max] = 2;
+    update(max);
     return max;
 }
