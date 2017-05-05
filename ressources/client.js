@@ -260,7 +260,7 @@ function ai(playermove) {
         var v_subject = index%15;
         var i;
 
-        for (i = 0; i<10; i++) {
+        for (i = 0; i<=10; i++) {
             var h_newvalue = evaluate([h_subject+i, h_subject+i+1,h_subject+i+2,h_subject+i+3,h_subject+i+4], ultimatefield);
             var v_newvalue = evaluate([v_subject+(i*15), v_subject+(i+1)*15,v_subject+(i+2)*15,v_subject+(i+3)*15,v_subject+(i+4)*15], ultimatefield);
             var h_oldvalue = evaluate([h_subject+i, h_subject+i+1,h_subject+i+2,h_subject+i+3,h_subject+i+4], oldfield);

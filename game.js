@@ -15,7 +15,7 @@ module.exports = {
                 if (field[i] === 0) {
                     field[i] = 2;
                     var value;
-                    var check = evaluate(i);
+                    var check = evaluate(i, depth);
                     if (depth === 1 || check !== 0/*or keineZuegeMehr(spieler)*/) {
                         value = check;
                     }
@@ -64,7 +64,7 @@ module.exports = {
                 if (field[i] === 0) {
                     var value;
                     field[i] = 1;
-                    var check = evaluate(i);
+                    var check = evaluate(i, depth);
                     if (depth === 1 || check !== 0/*or keineZuegeMehr(spieler)*/) {
                         value = check;
                     }
@@ -85,13 +85,13 @@ module.exports = {
             return minvalue;
         }
 
-        function evaluate(play) {
+        function evaluate(play, depth) {
             var a = check(field, play);
             if (a === 2) { //AI
-                return 10;
+                return 10 + depth;
             }
             if (a === 1) {
-                return -10;
+                return -10-depth;
             }
             else {
                 return 0;
