@@ -177,29 +177,59 @@ function declarewinner(winner) {
 
 function ai(playermove) {
     function evaluate(qtupple, field) {
+        function border(player) {
+            var b = 0;
+            var bt = 0;
+            var difference = qtupple[3] - qtupple[2];
+            if (!possible(qtupple[3], -difference) || qtupple[0] - difference === 3 - player) {
+                if (qtupple[1] === player) {
+                    bt++;
+                }
+                b++;
+            }
+            if (!possible(qtupple[3], difference) || qtupple[4] + difference === 3 - player) {
+                if (qtupple[1] === player) {
+                    bt++;
+                }
+                b++;
+            }
+            return [b, bt];
+        }
         var O = 0;
         var X = 0;
+        var cnil = 0; //consecutive nil
+        var max_cnil = 0;
         var nil = 0;
+        var b;
 
-        var nilscore =      7;
+        var nilscore =       7;
         var Xscore =        15; // x = 1 = pc
         var XXscore =      400;
-        var XXXscore =    1800;
+        var XXXscore =    1800; // one sided xxx
+        var XXXdscore = 35000; // duble sided xxx
         var XXXXscore = 100000;
         var Oscore =        35; // O = 2 = ai
         var OOscore =      800;
-        var OOOscore =   15000;
+        var OOOscore =   10000; // 15000
+        var OOOdscore =  30000;
         var OOOOscore = 800000;
 
         for (var i = 0; i<5; i++) {
-            if (field[qtupple[i]] === 1) {
+            var element = field[qtupple[i]];
+            if (element === 1) {
                 X ++;
+                cnil = 0;
             }
-            else if (field[qtupple[i]] === 2) {
+            else if (element === 2) {
                 O ++;
+                cnil = 0;
             }
             else {
+                cnil++;
                 nil ++;
+            }
+            if (cnil > max_cnil) {
+                max_cnil = cnil;
             }
         }
 
@@ -216,10 +246,22 @@ function ai(playermove) {
             return OOOOscore;
         }
         else if (O === 3) {
-            return OOOscore;
+            b = border(2);
+            if (max_cnil === 2 || b[0] == 2 || b[1] >= 1) {
+                return OOOscore;
+            }
+            else {
+                return OOOdscore;
+            }
         }
         else if (X === 3) {
-            return XXXscore;
+            b = border(1);
+            if (max_cnil === 2 || b[0] == 2 || b[1] >= 1) {
+                return XXXscore;
+            }
+            else {
+                return XXXdscore;
+            }
         }
         else if (O === 2) {
             return OOscore;
@@ -332,6 +374,7 @@ function ai(playermove) {
     var moves = [0];
     var i;
     for (i = 0; i<225; i++) {
+        //document.getElementById(i).innerHTML = scorefield[i];
         if (scorefield[i] > scorefield[moves[0]]) {
             moves = [i];
         }
