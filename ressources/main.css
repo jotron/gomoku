@@ -3,18 +3,35 @@
 
 body, html {
 	height: 99%;
-	background-color: #565264;
-	overflow: hidden;
+	background-color: #446aff;
 	position: relative;
 }
 
+@keyframes winnerone {
+	0%   {background-color:#446aff;}
+	50%  {background-color:#6fdb78;}
+	100% {background-color:#446aff;}
+}
+
+@keyframes winnertwo {
+	0%   {background-color:#446aff;}
+	50%  {background-color:#ffd863;}
+	100% {background-color:#446aff;}
+}
+
+/* Field */
+
 #wholefield {
 	opacity: 0;
-	height: 100%;
-	width: 100%;
+	height: 99vmin;
+	width: 99vmin;
 	display: table;
-	border-collapse:collapse;
-	background-color: #C9E4E7;
+	position: absolute;
+	border-collapse:separate;
+	border-spacing:0.5vmin;
+	left: 50%;
+  	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .row {
@@ -22,8 +39,9 @@ body, html {
 }
 
 .field {
+	border-radius: 50%;
 	display: table-cell;
-	border: 1px solid black;
+	background-color: #263a8c;
 	/*background-size: 100% 100%;*/
 }
 
@@ -31,51 +49,46 @@ body, html {
     background-color: #a8e6ed;
 }
 
-#overlay {
+/*Menu*/
+
+.overlay {
 	right: 0;
 	left: 0;
 	top: 0;
 	bottom: 0;
 	height: 100%;
-	width: 100%;
+	width: 100vw;
 	position: fixed;
-	background-color: whitesmoke;
 	opacity: 1;
-	transition: opacity 1s;
 	text-align: center;
-	z-index:  10;
-}
-#overlay.fade {
-	pointer-events: none;
-	opacity: 0;
-	position: absolute;
-}
-button {
-	height: 40px;
-	width: 250px;
-	background-color: #000000;
-	color: #ffffff;
-	margin-bottom: 20px;
-	border: none;
-}
-button:hover {
-	background-color: #2B5264;
-}
-#centered {
-	height: 180px;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
 }
 
-img {
-	height: 211px;
-	width: 375px;
-	position: absolute;
-	top: 40%;
-    left: 50%;
-	transform: translate(-50%, -50%);
+#menu {
+	transition: transform 0.75s ease-in;
+	z-index:  10;
 }
+
+button {
+	font-size: large;
+	font-weight: 300;
+	height: calc(100%/3);
+	width: 100%;
+	background-color: #6fdb78;
+	color: #ffffff;
+	border: none;
+}
+
+#algorithms {
+	position:fixed;
+	transform: translateX(1000vw);
+	display: none;
+	z-index: 9;
+	transition: transform 2s ease-out;
+}
+
+
+/*Loader*/
+
 #loader {
     display: none;
     position: absolute;

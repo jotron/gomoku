@@ -2,8 +2,8 @@
 var socket = io();
 var mode = 0;
 var ultimatefield = new Array(225).fill(0);
-var color1 = '#F1E0C5';
-var color2 = '#F2545B';
+var color1 = '#6fdb78';
+var color2 = '#ffd863';
 var scorefield = [21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21];
 
 var whosturn = 1;
@@ -143,35 +143,17 @@ function check(field, play) {
 }
 
 function declarewinner(winner) {
-    var wrapper = document.getElementById("overlay");
-    setTimeout(function () {
-
-        while (wrapper.firstChild) {
-            wrapper.removeChild(wrapper.firstChild);
-        }
-        if (winner === 1) {
-            wrapper.style.backgroundColor = color1;
-        }
-        else {
-            wrapper.style.backgroundColor = color2;
-        }
-        var winnergif = document.createElement('img');
-        if (mode == 1 || winner === 1) {
-            winnergif.setAttribute('src', 'winner.gif');
-        }
-        else {
-            winnergif.setAttribute('src', 'loser.gif');
-        }
-        wrapper.appendChild(winnergif);
-        wrapper.classList.remove("fade");
-    }, (200));
-
-    setTimeout( function() {
-        wrapper.style.cursor = 'pointer';
-        wrapper.addEventListener('click', function() {
-            location.reload();
-        });
-    }, (1000));
+    if (winner === 1) {
+        document.getElementsByTagName('html')[0].style.animation = 'winnerone 4s infinite';
+        document.getElementsByTagName('body')[0].style.animation = 'winnerone 4s infinite';
+        alert("green won!");
+    }
+    else {
+        document.getElementsByTagName('html')[0].style.animation = 'winnertwo 4s infinite';
+        document.getElementsByTagName('body')[0].style.animation = 'winnertwo 4s infinite';
+        alert("yellow won!");
+    }
+    location.reload();
 
 }
 

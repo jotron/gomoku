@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.9"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="iphone-icon.png">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-title" content="Gomoku">
 	<meta charset="utf-8"/>
@@ -9,21 +10,47 @@
 	<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="client.js"></script>
 </head>
+<style></style>
 <body>
-	<div id="overlay">
-        <div id="centered">
-            <button onclick="endoverlay(1)">Player vs. Player</button>
-         	<button onclick="endoverlay(2)">Player vs. qtupple-algorithm</button>
-		  	<button onclick="endoverlay(3)">Player vs. Minimax</button>
-        </div>
+	<div id="menu" class="overlay">
+        <button onclick="choice(1)">1 Player</button>
+        <button onclick="choice(2)">2 Player</button>
+		<button onclick="choice(3)">Online</button>
 	</div>
+    <div id="algorithms" class="overlay">
+        <button onclick="achoice(3)">Minimax</button>
+        <button onclick="achoice(2)">Qtupple</button>
+        <button onclick="achoice(2)">Qtupple</button>
+    </div>
     <div id="loader"></div>
 	<script>
 
-        function endoverlay(x) {
-			document.getElementById("wholefield").style.opacity = '1';
-			document.getElementById("overlay").className = 'fade';
-			mode = x;
+        function choice(x) {
+            if (x === 1) {
+                document.getElementById("algorithms").style.display = "initial";
+                document.getElementsByTagName("button")[x-1].style.backgroundColor = '#478c4d';
+                document.getElementById('menu').style.transform = "translateX(-100vw)";
+                setTimeout(function() {
+                    document.getElementById('menu').display = "none";
+                    document.getElementById('algorithms').style.transform = "none";
+                }, 50);
+            }
+            if (x === 2) {
+                document.getElementsByTagName("button")[x-1].style.backgroundColor = '#478c4d';
+                document.getElementById('menu').style.transform = "translateX(-100vw)";
+                document.getElementById('wholefield').style.opacity = '1';
+                mode = 1;
+            }
+            if (x === 3) {
+                return 0;
+            }
+        }
+
+        function achoice(x) {
+            document.getElementsByTagName("button")[x-1].style.backgroundColor = '#478c4d';
+            document.getElementById('algorithms').style.transform = "translateX(-100vw)";
+            document.getElementById('wholefield').style.opacity = '1';
+            mode = x;
         }
 
         function creategame() {
@@ -49,10 +76,10 @@
             document.body.appendChild(wholefield);
         }
 			creategame();
-
+        /*
 		document.ontouchmove = function(e){
     		e.preventDefault();
-		}
+		}*/
 	</script>
 </body>
 </html>
