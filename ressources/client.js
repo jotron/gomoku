@@ -58,7 +58,7 @@ function pclick(field) {
         }
 
         play = 224;
-        socket.on('answer', function (next) {
+        socket.on('minimaxanswer', function (next) {
             play = next.move;
 
             document.getElementById(play).classList.add('filled');
@@ -76,7 +76,7 @@ function pclick(field) {
         //loading button and deactivate interactions while waiting
         document.getElementById('wholefield').style.pointerEvents = 'none';
         document.getElementById('loader').style.display = 'initial';
-        socket.emit('request', {currentfield: ultimatefield, });
+        socket.emit('minimaxrequest', {currentfield: ultimatefield, });
     }
 }
 

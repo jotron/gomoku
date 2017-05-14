@@ -12,43 +12,28 @@
 </head>
 <style></style>
 <body>
-	<div id="menu" class="overlay">
-        <button onclick="choice(1)">1 Player</button>
-        <button onclick="choice(2)">2 Player</button>
-		<button onclick="choice(3)">Online</button>
+	<div id="menu">
+            <button onclick="choice(1)">2 Player
+            </button><button onclick="choice(3)" class="bluebutton">Minimax
+            </button><button onclick="choice(2)" class="bluebutton">Qtupple
+            </button><button onclick="onlinemode()">Online<span id="onlinemessage"></span></button>
 	</div>
-    <div id="algorithms" class="overlay">
-        <button onclick="achoice(3)">Minimax</button>
-        <button onclick="achoice(2)">Qtupple</button>
-        <button onclick="achoice(2)">Qtupple</button>
-    </div>
     <div id="loader"></div>
 	<script>
 
-        function choice(x) {
-            if (x === 1) {
-                document.getElementById("algorithms").style.display = "initial";
-                document.getElementsByTagName("button")[x-1].style.backgroundColor = '#478c4d';
-                document.getElementById('menu').style.transform = "translateX(-100vw)";
-                setTimeout(function() {
-                    document.getElementById('menu').display = "none";
-                    document.getElementById('algorithms').style.transform = "none";
-                }, 50);
-            }
-            if (x === 2) {
-                document.getElementsByTagName("button")[x-1].style.backgroundColor = '#478c4d';
-                document.getElementById('menu').style.transform = "translateX(-100vw)";
-                document.getElementById('wholefield').style.opacity = '1';
-                mode = 1;
-            }
-            if (x === 3) {
-                return 0;
-            }
+        function onlinemode() {
+            return 0;
         }
 
-        function achoice(x) {
-            document.getElementsByTagName("button")[x-1].style.backgroundColor = '#478c4d';
-            document.getElementById('algorithms').style.transform = "translateX(-100vw)";
+        function choice(x) {
+            var buttons = document.getElementsByTagName('button');
+            buttons[0].style.transform = "translate(-50vw, -50vh)";
+            buttons[1].style.transform = "translate(+50vw, -50vh)";
+            buttons[2].style.transform = "translate(-50vw, +50vh)";
+            buttons[3].style.transform = "translate(+50vw, +50vh)";
+            setTimeout(function() {
+                document.getElementById('menu').style.display = "none";
+            }, 1000);
             document.getElementById('wholefield').style.opacity = '1';
             mode = x;
         }
@@ -75,11 +60,8 @@
             }
             document.body.appendChild(wholefield);
         }
-			creategame();
-        /*
-		document.ontouchmove = function(e){
-    		e.preventDefault();
-		}*/
+		creategame();
+
 	</script>
 </body>
 </html>
