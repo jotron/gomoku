@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var gomoku = require("./game.js");
+var gomoku = require("./minimax.js");
 var validator = require('validator');
 
 app.use(express.static('ressources'));
