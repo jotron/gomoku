@@ -10,7 +10,7 @@ Deshalb steige ich auf Javascript um und programmiere das Spiel als Webseite. Ic
 Ein weiterer Vorteil von Javascript ist, dass mein Spiel dann Cross-Platform sein wird. Das es wird wirklich "spielbar" sein.
 
 ## *04.03.17*
-Damit die verbrachte Zeit mit Python nicht « umsonst » war, hole ich es zuhause nach, die Feldausgabe und den Input zu programmieren. Javascript « lerne » ich auf <a href="http://w3schools.com">w3schools.com</a>. Ich schaue einfach nach, wenn ich irgendetwas brauche. Ab und zu schaue ich auch ein paar Stackoverflow-Fragen an wenn ich nicht weiterkomme. 
+Damit die verbrachte Zeit mit Python nicht « umsonst » war, hole ich es zuhause nach, die Feldausgabe und den Input zu programmieren. Javascript « lerne » ich auf <a href="http://w3schools.com">w3schools.com</a>. Ich schaue einfach nach, wenn ich irgendetwas brauche. Ab und zu schaue ich auch ein paar Stackoverflow-Fragen an wenn ich nicht weiterkomme.
 Zuerst habe ich das Feld als grosse HTML Tabelle gezeichnet. Dies erschien mir aber wenig elegant. Ich bin darum auf eine fast vollständig durch Javascript-DOM manipuierte Webseite umgestiegen. Die Felder und Reihen sind nur noch DIV’s. Auf ein grosses Problem bin ich getroffen als ich die Felder bei Klick’s färben wollte. Ich vermute, dass ich nämlich nicht auf « virtuelle » Elemente mittels id oder class zugreifen kann. Ich gebe nun einfach direkt die kreierten elemente der click funktion weiter, das funktioniert. Ich habe dieses Wochenende auch die Spielmodusabfrage mittels Javascript-prompt programiert. Des weiteren habe ich die Funktion angefangen die testet ob jemand gewonnen hat, es funktioniert immerhin schon horizontal ;).
 Nächstes mal:
 
@@ -137,7 +137,7 @@ button {
 
 Heute habe ich die Dateistruktur leicht vereinfacht. Ausserdem habe ich die Einleitung zu meiner Projekt-Arbeit geschrieben. Zum Schluss habe ich ebenfalls das Journal überarbeitet.
 
+Zuhause habe ich auch noch die Benutzerfreundlichkeit erhöht.
+Ich habe zum Beispiel deaktiviert das man den "Text" auswählen kann. ([Stackoverflow](https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css))
+
 Zu Tun ist die nächsten Male noch: Realtime-Online-Modus, besserer Qtupple-Algorithmus, besserer Minimax-Algorithmus, bessere "Abschluss-Animation" (Bei Sieg).
-
-
-

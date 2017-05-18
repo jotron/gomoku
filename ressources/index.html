@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.9"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
     <link rel="apple-touch-icon" sizes="180x180" href="iphone-icon.png">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-title" content="Gomoku">
@@ -62,6 +62,9 @@
         }
 		creategame();
 
+        document.ontouchmove = function(e){
+    		e.preventDefault();
+		}
 	</script>
 </body>
 </html>

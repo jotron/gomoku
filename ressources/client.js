@@ -153,7 +153,9 @@ function declarewinner(winner) {
         document.getElementsByTagName('body')[0].style.animation = 'winnertwo 4s infinite';
         alert("yellow won!");
     }
-    location.reload();
+    setTimeout(function() {
+        document.onclick = function() {location.reload();};
+    }, 0);
 
 }
 
