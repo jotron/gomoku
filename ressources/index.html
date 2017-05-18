@@ -14,18 +14,19 @@
 <body>
 	<div id="menu">
             <button onclick="choice(1)">2 Player
-            </button><button onclick="choice(3)" class="bluebutton">Minimax
-            </button><button onclick="choice(2)" class="bluebutton">Qtupple
-            </button><button onclick="onlinemode()">Online<span id="onlinemessage"></span></button>
+            </button><button onclick="choice(2)" class="bluebutton">Minimax
+            </button><button onclick="choice(3)" class="bluebutton">Qtupple
+            </button><button onclick="onlinesetup()">Online<span id="onlinemessage"></span></button>
 	</div>
     <div id="loader"></div>
 	<script>
 
-        function onlinemode() {
+        function onlinesetup() {
             return 0;
         }
 
         function choice(x) {
+            /*Animation*/
             var buttons = document.getElementsByTagName('button');
             buttons[0].style.transform = "translate(-50vw, -50vh)";
             buttons[1].style.transform = "translate(+50vw, -50vh)";
@@ -35,7 +36,42 @@
                 document.getElementById('menu').style.display = "none";
             }, 1000);
             document.getElementById('wholefield').style.opacity = '1';
-            mode = x;
+            
+            /*select Mode*/
+            var i;
+            var fields = document.getElementsByClassName('field');
+            if (x === 1) {
+                for (i = 0; i<225; i++) {
+                    fields[i].addEventListener("click", function() {
+                        if (!this.classList.contains('filled')) {
+                            PlayervsPlayer_Mode(this);
+                            this.classList.add('filled');
+                        }
+                    });
+                }
+            }
+            else if (x === 2) {
+                for (i = 0; i<225; i++) {
+                    fields[i].addEventListener("click", function() {
+                        if (!this.classList.contains('filled')) {
+                            Minimax_Mode(this);
+                            this.classList.add('filled');
+                        }
+                    });
+                }
+                
+            }
+            else if (x === 3) {
+                for (i = 0; i<225; i++) {
+                    fields[i].addEventListener("click", function() {
+                        if (!this.classList.contains('filled')) {
+                            Qtupple_Mode(this);
+                            this.classList.add('filled');
+                        }
+                    });
+                }
+                
+            }
         }
 
         function creategame() {
@@ -49,19 +85,13 @@
                     var field = document.createElement("div");
                     field.className = "field";
                     field.id = i*15 + k;
-                    field.addEventListener("click", function() {
-                        if (!this.classList.contains('filled')) {
-                            pclick(this);
-                            this.classList.add('filled');
-                        }
-                    });
                     row.appendChild(field);
                 }
             }
             document.body.appendChild(wholefield);
         }
-		creategame();
-
+		
+        creategame();
         document.ontouchmove = function(e){
     		e.preventDefault();
 		}

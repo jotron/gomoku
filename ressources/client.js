@@ -1,82 +1,76 @@
 'use strict';
 var socket = io();
-var mode = 0;
 var ultimatefield = new Array(225).fill(0);
 var color1 = '#6fdb78';
 var color2 = '#ffd863';
-var scorefield = [21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21];
+var Qtupple_scorefield = [21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21];
 
 var whosturn = 1;
-function pclick(field) {
-    var play;
-    var winner = 0;
+function Minimax_Mode(field) {
     var move = parseInt(field.id);
-    //Player-mode
-    if (mode === 1) {
-        if (whosturn === 1) {
-            field.style.backgroundColor = color1;
-            ultimatefield[field.id] = whosturn;
-            whosturn = 2;
-        }
-        else {
-            field.style.backgroundColor = color2;
-            ultimatefield[field.id] = whosturn;
-            whosturn = 1;
-        }
-        winner = check(ultimatefield, field.id);
-        if (winner !== 0) {
-            declarewinner(winner);
-            return 0;
-        }
+    
+    field.style.backgroundColor = color1;
+    ultimatefield[move] = 1;
+    var winner = check(ultimatefield, move);
+    if (winner !== 0) {
+        declarewinner(winner);
+        return 0;
     }
-    //Qtupple-mode
-    else if (mode === 2) {
-        field.style.backgroundColor = color1;
-        ultimatefield[move] = 1;
-        winner = check(ultimatefield, move);
-        if (winner !== 0) {
-            declarewinner(winner);
-            return 0;
-        }
-        play = ai(move);
+
+    var play = 224;
+    socket.on('minimaxanswer', function (next) {
+        play = next.move;
         document.getElementById(play).classList.add('filled');
         document.getElementById(play).style.backgroundColor = color2;
+        ultimatefield[play] = 2;
         winner = check(ultimatefield, play);
         if (winner !== 0) {
             declarewinner(winner);
             return 0;
         }
+        document.getElementById('wholefield').style.pointerEvents = '';
+        document.getElementById('loader').style.display = 'none';
+    });
+
+    //loading button and deactivate interactions while waiting
+    document.getElementById('wholefield').style.pointerEvents = 'none';
+    document.getElementById('loader').style.display = 'initial';
+    socket.emit('minimaxrequest', {currentfield: ultimatefield, });
+}
+function Qtupple_Mode(field) {
+    var move = parseInt(field.id);
+    field.style.backgroundColor = color1;
+    ultimatefield[move] = 1;
+    var winner = check(ultimatefield, move);
+    if (winner !== 0) {
+        declarewinner(winner);
+        return 0;
     }
-    //Computer Mode
-    else if (mode === 3) {
-        field.style.backgroundColor = color1;
-        ultimatefield[move] = 1;
-        winner = check(ultimatefield, move);
-        if (winner !== 0) {
-            declarewinner(winner);
-            return 0;
-        }
-
-        play = 224;
-        socket.on('minimaxanswer', function (next) {
-            play = next.move;
-
-            document.getElementById(play).classList.add('filled');
-            document.getElementById(play).style.backgroundColor = color2;
-            ultimatefield[play] = 2;
-            winner = check(ultimatefield, play);
-            if (winner !== 0) {
-                declarewinner(winner);
-                return 0;
-            }
-            document.getElementById('wholefield').style.pointerEvents = '';
-            document.getElementById('loader').style.display = 'none';
-        });
-
-        //loading button and deactivate interactions while waiting
-        document.getElementById('wholefield').style.pointerEvents = 'none';
-        document.getElementById('loader').style.display = 'initial';
-        socket.emit('minimaxrequest', {currentfield: ultimatefield, });
+    var play = Qtupple_Algorithm(move);
+    document.getElementById(play).classList.add('filled');
+    document.getElementById(play).style.backgroundColor = color2;
+    winner = check(ultimatefield, play);
+    if (winner !== 0) {
+        declarewinner(winner);
+        return 0;
+    }
+}
+function PlayervsPlayer_Mode(field) {
+    var move = parseInt(field.id);
+    if (whosturn === 1) {
+            field.style.backgroundColor = color1;
+            ultimatefield[move] = whosturn;
+            whosturn = 2;
+    }
+    else {
+        field.style.backgroundColor = color2;
+        ultimatefield[move] = whosturn;
+        whosturn = 1;
+    }
+    var winner = check(ultimatefield, move);
+    if (winner !== 0) {
+        declarewinner(winner);
+        return 0;
     }
 }
 
@@ -159,7 +153,7 @@ function declarewinner(winner) {
 
 }
 
-function ai(playermove) {
+function Qtupple_Algorithm(playermove) {
     function evaluate(qtupple, field) {
         function border(player) {
             var b = 0;
@@ -281,7 +275,7 @@ function ai(playermove) {
         var oldfield = ultimatefield.slice(0);
         oldfield[index] = 0;
 
-        //update scorefield horizontally and vertically
+        //update Qtupple_scorefield horizontally and vertically
         var h_subject = Math.floor(index/15) * 15;
         var v_subject = index%15;
         var i;
@@ -293,18 +287,18 @@ function ai(playermove) {
             var v_oldvalue = evaluate([v_subject+(i*15), v_subject+(i+1)*15,v_subject+(i+2)*15,v_subject+(i+3)*15,v_subject+(i+4)*15], oldfield);
 
             for (var k=0; k<5;k++) {
-                if (scorefield[h_subject+i+k] !== -1) {
-                    scorefield[h_subject+i+k] = scorefield[h_subject+i+k] - h_oldvalue + h_newvalue;
+                if (Qtupple_scorefield[h_subject+i+k] !== -1) {
+                    Qtupple_scorefield[h_subject+i+k] = Qtupple_scorefield[h_subject+i+k] - h_oldvalue + h_newvalue;
                     //document.getElementById(h_subject+i+k).style.backgroundColor = 'GreenYellow';
                 }
-                if (scorefield[v_subject+(i+k)*15] !== -1) {
-                    scorefield[v_subject+(i+k)*15] = scorefield[v_subject+(i+k)*15] - v_oldvalue + v_newvalue;
+                if (Qtupple_scorefield[v_subject+(i+k)*15] !== -1) {
+                    Qtupple_scorefield[v_subject+(i+k)*15] = Qtupple_scorefield[v_subject+(i+k)*15] - v_oldvalue + v_newvalue;
                     //document.getElementById(v_subject+(i+k)*15).style.backgroundColor = 'GreenYellow';
                 }
             }
         }
 
-        // update scorefield diagonally
+        // update Qtupple_scorefield diagonally
         var dr_subject = index;
         var dl_subject = index;
         i=0;
@@ -325,8 +319,8 @@ function ai(playermove) {
             var dr_oldvalue = evaluate([dr_subject, dr_subject+1*16,dr_subject+2*16,dr_subject+3*16,dr_subject+4*16], oldfield);
 
             for (k=0; k<5;k++) {
-                if (scorefield[dr_subject+k*16] !== -1) {
-                    scorefield[dr_subject+k*16] = scorefield[dr_subject+k*16] - dr_oldvalue + dr_newvalue;
+                if (Qtupple_scorefield[dr_subject+k*16] !== -1) {
+                    Qtupple_scorefield[dr_subject+k*16] = Qtupple_scorefield[dr_subject+k*16] - dr_oldvalue + dr_newvalue;
                     //document.getElementById(dr_subject+k*16).style.backgroundColor = 'GreenYellow';
                 }
             }
@@ -341,8 +335,8 @@ function ai(playermove) {
             var dl_oldvalue = evaluate([dl_subject, dl_subject+1*14,dl_subject+2*14,dl_subject+3*14,dl_subject+4*14], oldfield);
 
             for (k=0; k<5;k++) {
-                if (scorefield[dl_subject+k*14] !== -1) {
-                    scorefield[dl_subject+k*14] = scorefield[dl_subject+k*14] - dl_oldvalue + dl_newvalue;
+                if (Qtupple_scorefield[dl_subject+k*14] !== -1) {
+                    Qtupple_scorefield[dl_subject+k*14] = Qtupple_scorefield[dl_subject+k*14] - dl_oldvalue + dl_newvalue;
                     //document.getElementById(dl_subject+k*14).style.backgroundColor = 'GreenYellow';
                 }
             }
@@ -352,17 +346,17 @@ function ai(playermove) {
         }
     }
 
-    // return best moves of scorefield
+    // return best moves of Qtupple_scorefield
     update(playermove);
-    scorefield[playermove] = -1;
+    Qtupple_scorefield[playermove] = -1;
     var moves = [0];
     var i;
     for (i = 0; i<225; i++) {
-        //document.getElementById(i).innerHTML = scorefield[i];
-        if (scorefield[i] > scorefield[moves[0]]) {
+        //document.getElementById(i).innerHTML = Qtupple_scorefield[i];
+        if (Qtupple_scorefield[i] > Qtupple_scorefield[moves[0]]) {
             moves = [i];
         }
-        else if (scorefield[i] === scorefield[moves[0]]) {
+        else if (Qtupple_scorefield[i] === Qtupple_scorefield[moves[0]]) {
             moves.push(i);
         }
     }
@@ -372,10 +366,10 @@ function ai(playermove) {
     ultimatefield[max] = 2;
     update(max);
 
-    scorefield[max] = -1;
+    Qtupple_scorefield[max] = -1;
 
     for (i = 0; i<225; i++) {
-        //document.getElementById(i).innerHTML = scorefield[i];
+        //document.getElementById(i).innerHTML = Qtupple_scorefield[i];
     }
     return max;
 }

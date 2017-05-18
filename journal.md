@@ -135,9 +135,12 @@ button {
 
 ## 18.05.17
 
-Heute habe ich die Dateistruktur leicht vereinfacht. Ausserdem habe ich die Einleitung zu meiner Projekt-Arbeit geschrieben. Zum Schluss habe ich ebenfalls das Journal überarbeitet.
+Während der Woche habe ich die Dateistruktur leicht vereinfacht. Ausserdem habe ich die Einleitung zu meiner Projekt-Arbeit geschrieben. Zum Schluss habe ich ebenfalls das Journal überarbeitet.
 
-Zuhause habe ich auch noch die Benutzerfreundlichkeit erhöht.
+Ausserdem habe ich die Benutzerfreundlichkeit erhöht.
 Ich habe zum Beispiel deaktiviert das man den "Text" auswählen kann. ([Stackoverflow](https://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css))
 
-Zu Tun ist die nächsten Male noch: Realtime-Online-Modus, besserer Qtupple-Algorithmus, besserer Minimax-Algorithmus, bessere "Abschluss-Animation" (Bei Sieg).
+In der Lektion habe ich versucht den Code übersichtlicher zu machen. Ich habe die grosse *pclick()* Funktion durch 3 kleiner Funktionen für je einen Modus ersetzt.
+
+Zu Tun ist die nächsten Male noch: Realtime-Online-Modus, besserer Minimax-Algorithmus, bessere "Abschluss-Animation" (Bei Sieg), höhere Mobilfreundlichkeit (z.b Zoom).
+
