@@ -144,3 +144,7 @@ In der Lektion habe ich versucht den Code übersichtlicher zu machen. Ich habe d
 
 Zu Tun ist die nächsten Male noch: Realtime-Online-Modus, besserer Minimax-Algorithmus, bessere "Abschluss-Animation" (Bei Sieg), höhere Mobilfreundlichkeit (z.b Zoom).
 
+Nach der Lektion zuhause habe ich dann versucht den Minimax-Algorithmus zu optimieren. Ich habe mir überlegt, dass er, wenn Wert != 0 ist, nicht mehr tiefer suchen muss. Es braucht also eine variable Suchtiefe.
+Ich steigere die Suchtiefe graduell. Dieses eventuell ünnotige anfängliche Suchen verlängert die Laufzeit nie um mehr als 0.45%.
+
+Zudem habe ich ein Problem behoben bei dem der Sieg mehrfach verkündet wurde. Das Problem lag daran das Node-Events mehrfach angehängt wurden. ([Stackoverflow](https://stackoverflow.com/questions/17057455/socket-io-firing-multiple-events)).

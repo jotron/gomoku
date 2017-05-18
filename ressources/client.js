@@ -8,7 +8,7 @@ var Qtupple_scorefield = [21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28
 var whosturn = 1;
 function Minimax_Mode(field) {
     var move = parseInt(field.id);
-    
+
     field.style.backgroundColor = color1;
     ultimatefield[move] = 1;
     var winner = check(ultimatefield, move);
@@ -26,10 +26,12 @@ function Minimax_Mode(field) {
         winner = check(ultimatefield, play);
         if (winner !== 0) {
             declarewinner(winner);
+            document.getElementById('loader').style.display = 'none';
             return 0;
         }
         document.getElementById('wholefield').style.pointerEvents = '';
         document.getElementById('loader').style.display = 'none';
+        socket.removeAllListeners();
     });
 
     //loading button and deactivate interactions while waiting
