@@ -17,6 +17,7 @@ function Minimax_Mode(field) {
         return 0;
     }
 
+    var qtupple_play = Qtupple_Algorithm(move, false);
     var play = 224;
     socket.on('minimaxanswer', function (next) {
         play = next.move;
@@ -31,13 +32,18 @@ function Minimax_Mode(field) {
         }
         document.getElementById('wholefield').style.pointerEvents = '';
         document.getElementById('loader').style.display = 'none';
+
+        // do the Qtupple clean up
+        Qtupple_Algorithm(play, false);
+        Qtupple_scorefield[play] = -1;
+
         socket.removeAllListeners();
     });
 
     //loading button and deactivate interactions while waiting
     document.getElementById('wholefield').style.pointerEvents = 'none';
     document.getElementById('loader').style.display = 'initial';
-    socket.emit('minimaxrequest', {currentfield: ultimatefield, });
+    socket.emit('minimaxrequest', {currentfield: ultimatefield, scorefield: Qtupple_scorefield, qplay: qtupple_play});
 }
 function Qtupple_Mode(field) {
     var move = parseInt(field.id);
@@ -48,7 +54,7 @@ function Qtupple_Mode(field) {
         declarewinner(winner);
         return 0;
     }
-    var play = Qtupple_Algorithm(move);
+    var play = Qtupple_Algorithm(move, true);
     document.getElementById(play).classList.add('filled');
     document.getElementById(play).style.backgroundColor = color2;
     winner = check(ultimatefield, play);
@@ -142,12 +148,16 @@ function declarewinner(winner) {
     if (winner === 1) {
         document.getElementsByTagName('html')[0].style.animation = 'winnerone 4s infinite';
         document.getElementsByTagName('body')[0].style.animation = 'winnerone 4s infinite';
-        alert("green won!");
+        setTimeout( function() {
+            alert("green won!");
+        }, 100);
     }
     else {
         document.getElementsByTagName('html')[0].style.animation = 'winnertwo 4s infinite';
         document.getElementsByTagName('body')[0].style.animation = 'winnertwo 4s infinite';
-        alert("yellow won!");
+        setTimeout( function() {
+            alert("yellow won!");
+        }, 100);
     }
     setTimeout(function() {
         document.onclick = function() {location.reload();};
@@ -155,7 +165,7 @@ function declarewinner(winner) {
 
 }
 
-function Qtupple_Algorithm(playermove) {
+function Qtupple_Algorithm(playermove, mode) {
     function evaluate(qtupple, field) {
         function border(player) {
             var b = 0;
@@ -363,12 +373,15 @@ function Qtupple_Algorithm(playermove) {
         }
     }
 
-    // choose randomly
+    // choose randomly, only if not a minimaxrequest
     var max = moves[Math.floor(Math.random() * moves.length)];
-    ultimatefield[max] = 2;
-    update(max);
+    if (mode) {
+        ultimatefield[max] = 2;
+        update(max);
 
-    Qtupple_scorefield[max] = -1;
+
+        Qtupple_scorefield[max] = -1;
+    }
 
     for (i = 0; i<225; i++) {
         //document.getElementById(i).innerHTML = Qtupple_scorefield[i];

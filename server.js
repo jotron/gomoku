@@ -18,7 +18,7 @@ io.on('connection', function(socket){
         }
         if (saneinput) {
             console.time('timer');
-            var play = gomoku.main(data.currentfield);
+            var play = gomoku.main(data.currentfield, data.scorefield, data.qplay);
             console.timeEnd('timer');
             socket.emit('minimaxanswer', { move: play });
         }

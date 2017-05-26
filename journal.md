@@ -148,3 +148,7 @@ Nach der Lektion zuhause habe ich dann versucht den Minimax-Algorithmus zu optim
 Ich steigere die Suchtiefe graduell. Dieses eventuell ünnotige anfängliche Suchen verlängert die Laufzeit nie um mehr als 0.45%.
 
 Zudem habe ich ein Problem behoben bei dem der Sieg mehrfach verkündet wurde. Das Problem lag daran das Node-Events mehrfach angehängt wurden. ([Stackoverflow](https://stackoverflow.com/questions/17057455/socket-io-firing-multiple-events)).
+
+## *26.05.17*
+
+Heute habe ich erstens die *declarewinner* Funktion verlangsamt und dann den Minimax Algorithmus verbessert. Ich sortiere die Felder nach der Qtupple-Bewertung. Zum sortieren haben mir [Stackoverflow](https://stackoverflow.com/questions/3746725/create-a-javascript-array-containing-1-n) und [W3Schools](https://www.w3schools.com/jsref/jsref_sort.asp) geholfen.
