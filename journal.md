@@ -152,3 +152,8 @@ Zudem habe ich ein Problem behoben bei dem der Sieg mehrfach verkündet wurde. D
 ## *26.05.17*
 
 Heute habe ich erstens die *declarewinner* Funktion verlangsamt und dann den Minimax Algorithmus verbessert. Ich sortiere die Felder nach der Qtupple-Bewertung. Zum sortieren haben mir [Stackoverflow](https://stackoverflow.com/questions/3746725/create-a-javascript-array-containing-1-n) und [W3Schools](https://www.w3schools.com/jsref/jsref_sort.asp) geholfen.
+
+## 01.06.17
+Heute habe ich am Online-Modus gearbeitet. Es wird bereits angezeigt wie viele Personen gleichzeitig online sind.
+Wenn zuum Beispiel 2 Leute Online sind & warten, dann wird choice(Onlinemode) ausgeführt.
+Zudem habe ich ein wenig Code eingespart bei der Modus-Vergabe.

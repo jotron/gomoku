@@ -21,6 +21,7 @@
     <div id="loader"></div>
 	<script>
         var waiting_for_coop = false;
+        var playingcoop = false;
         function onlinesetup() {
             if (!waiting_for_coop) {
                 socket.emit('coop_request');
@@ -32,12 +33,18 @@
             state = state.data;
             if (state == 2 && waiting_for_coop) {
                 document.getElementById('onlinemessage').innerHTML = '</br>Found a pair!';
+                playingcoop = true;
+                waiting_for_coop = false;
+                choice(4);
             } 
             else if (state == 1 && !waiting_for_coop) {
                 document.getElementById('onlinemessage').innerHTML = '</br>ready';
             }
             else if (state == 1 && waiting_for_coop) {
                 document.getElementById('onlinemessage').innerHTML = '</br>waiting';
+            }
+            else if (state < 2 && playingcoop) {
+                alert("adversery left");
             }
             else {
                 document.getElementById('onlinemessage').innerHTML = '';
@@ -55,41 +62,19 @@
                 document.getElementById('menu').style.display = "none";
             }, 1000);
             document.getElementById('wholefield').style.opacity = '1';
-
+            
             /*select Mode*/
+            var moduslist = [PlayervsPlayer_Mode, Minimax_Mode, Qtupple_Algorithm, Online_Mode];
             var i;
             var fields = document.getElementsByClassName('field');
-            if (x === 1) {
-                for (i = 0; i<225; i++) {
-                    fields[i].addEventListener("click", function() {
-                        if (!this.classList.contains('filled')) {
-                            PlayervsPlayer_Mode(this);
-                            this.classList.add('filled');
-                        }
-                    });
-                }
-            }
-            else if (x === 2) {
-                for (i = 0; i<225; i++) {
-                    fields[i].addEventListener("click", function() {
-                        if (!this.classList.contains('filled')) {
-                            Minimax_Mode(this);
-                            this.classList.add('filled');
-                        }
-                    });
-                }
-
-            }
-            else if (x === 3) {
-                for (i = 0; i<225; i++) {
-                    fields[i].addEventListener("click", function() {
-                        if (!this.classList.contains('filled')) {
-                            Qtupple_Mode(this);
-                            this.classList.add('filled');
-                        }
-                    });
-                }
-
+            
+            for (i = 0; i<225; i++) {
+                fields[i].addEventListener("click", function() {
+                    if (!this.classList.contains('filled')) {
+                        moduslist[x-1](this);
+                        this.classList.add('filled');
+                    }
+                });
             }
 
             /* remove from waiting_for_coop*/
