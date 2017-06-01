@@ -30,18 +30,21 @@ io.on('connection', function(socket){
         }
     });
     socket.on('coop_request', function() {
-        usersonline ++;
-        console.log(usersonline);
-        socket.on('disconnect', function() {
+        function coopdisconnection() {
             usersonline --;
             console.log(usersonline);
-        });
+        }
+        usersonline ++;
+        console.log(usersonline);
+        socket.on('disconnect', coopdisconnection );
         socket.on('coop_disconnect', function() {
-            usersonline--;
-            console.log(usersonline);
-            //socket.off('coop_request');
+            coopdisconnection();
+            socket.removeListener('disconnect', coopdisconnection);
         });
     });
+    setInterval(function() {
+         socket.emit('onlinestate', {data: usersonline});
+    }, 1000);
 });
 
 http.listen(80, function(){

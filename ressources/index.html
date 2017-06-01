@@ -28,6 +28,21 @@
             waiting_for_coop = true;
             return 0;
         }
+        socket.on('onlinestate', function (state) {
+            state = state.data;
+            if (state == 2 && waiting_for_coop) {
+                document.getElementById('onlinemessage').innerHTML = '</br>Found a pair!';
+            } 
+            else if (state == 1 && !waiting_for_coop) {
+                document.getElementById('onlinemessage').innerHTML = '</br>ready';
+            }
+            else if (state == 1 && waiting_for_coop) {
+                document.getElementById('onlinemessage').innerHTML = '</br>waiting';
+            }
+            else {
+                document.getElementById('onlinemessage').innerHTML = '';
+            }
+        });
 
         function choice(x) {
             /*Animation*/
@@ -77,12 +92,10 @@
 
             }
 
-        /* remove from waiting_for_coop*/
-        if (waiting_for_coop) {
-            socket.emit('coop_disconnect');
-            socket.off('coop_request');
-            //socket.disconnect()
-        }
+            /* remove from waiting_for_coop*/
+            if (waiting_for_coop) {
+                socket.emit('coop_disconnect');
+            }
         }
 
         function creategame() {
