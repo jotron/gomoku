@@ -20,8 +20,12 @@
 	</div>
     <div id="loader"></div>
 	<script>
-
+        var waiting_for_coop = false;
         function onlinesetup() {
+            if (!waiting_for_coop) {
+                socket.emit('coop_request');
+            };
+            waiting_for_coop = true;
             return 0;
         }
 
@@ -36,7 +40,7 @@
                 document.getElementById('menu').style.display = "none";
             }, 1000);
             document.getElementById('wholefield').style.opacity = '1';
-            
+
             /*select Mode*/
             var i;
             var fields = document.getElementsByClassName('field');
@@ -59,7 +63,7 @@
                         }
                     });
                 }
-                
+
             }
             else if (x === 3) {
                 for (i = 0; i<225; i++) {
@@ -70,8 +74,15 @@
                         }
                     });
                 }
-                
+
             }
+
+        /* remove from waiting_for_coop*/
+        if (waiting_for_coop) {
+            socket.emit('coop_disconnect');
+            socket.off('coop_request');
+            //socket.disconnect()
+        }
         }
 
         function creategame() {
@@ -90,7 +101,7 @@
             }
             document.body.appendChild(wholefield);
         }
-		
+
         creategame();
         document.ontouchmove = function(e){
     		e.preventDefault();

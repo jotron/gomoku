@@ -7,6 +7,8 @@ var validator = require('validator');
 
 app.use(express.static('ressources'));
 
+var usersonline = 0;
+
 io.on('connection', function(socket){
     socket.on('minimaxrequest', function (data) {
         var i;
@@ -26,6 +28,19 @@ io.on('connection', function(socket){
             console.log("insane input");
             console.log(data.currentfield);
         }
+    });
+    socket.on('coop_request', function() {
+        usersonline ++;
+        console.log(usersonline);
+        socket.on('disconnect', function() {
+            usersonline --;
+            console.log(usersonline);
+        });
+        socket.on('coop_disconnect', function() {
+            usersonline--;
+            console.log(usersonline);
+            //socket.off('coop_request');
+        });
     });
 });
 
