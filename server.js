@@ -42,8 +42,11 @@ io.on('connection', function(socket){
             socket.removeListener('disconnect', coopdisconnection);
         });
     });
+    socket.on('onlinemove', function(move) {
+        socket.broadcast.emit('onlinemove', move);
+    });
     setInterval(function() {
-         socket.emit('onlinestate', {data: usersonline});
+        socket.emit('onlinestate', {data: usersonline});
     }, 1000);
 });
 

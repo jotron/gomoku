@@ -82,14 +82,17 @@ function PlayervsPlayer_Mode(field) {
     }
 }
 function Online_Mode(field) {
-    field.style.backgroundColor = color1;
-    var move = parseInt(field.id);
-    socket.emit('onlinemove', move);
-    ultimatefield[move] = 1;
-    var winner = check(ultimatefield, move);
-    if (winner !== 0) {
-        declarewinner(winner);
-        return 0;
+    if (whosturn === 1) {
+        whosturn = 2;
+        field.style.backgroundColor = color1;
+        var move = parseInt(field.id);
+        socket.emit('onlinemove', move);
+        ultimatefield[move] = 1;
+        var winner = check(ultimatefield, move);
+        if (winner !== 0) {
+            declarewinner(winner);
+            return 0;
+        }
     }
     return 0;
 }

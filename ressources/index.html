@@ -37,23 +37,26 @@
                 waiting_for_coop = false;
                 choice(4);
                 socket.on('onlinemove', function(move) {
+                    console.log(move);
                     ultimatefield[move] = 2;
-                    document.getElementById('move').style.backgroundColor = color1;
+                    document.getElementById(move).style.backgroundColor = color2;
                     var winner = check(ultimatefield, move);
                     if (winner !== 0) {
                         declarewinner(winner);
                         return 0;
                     }
+                    whosturn = 1;
                 });
-            } 
+            }
+            else if (state < 2 && playingcoop) {
+                alert("adversery left");
+                location.reload();
+            }
             else if (state == 1 && !waiting_for_coop) {
                 document.getElementById('onlinemessage').innerHTML = '</br>ready';
             }
             else if (state == 1 && waiting_for_coop) {
                 document.getElementById('onlinemessage').innerHTML = '</br>waiting';
-            }
-            else if (state < 2 && playingcoop) {
-                alert("adversery left");
             }
             else {
                 document.getElementById('onlinemessage').innerHTML = '';
@@ -71,12 +74,12 @@
                 document.getElementById('menu').style.display = "none";
             }, 1000);
             document.getElementById('wholefield').style.opacity = '1';
-            
+
             /*select Mode*/
             var moduslist = [PlayervsPlayer_Mode, Minimax_Mode, Qtupple_Algorithm, Online_Mode];
             var i;
             var fields = document.getElementsByClassName('field');
-            
+
             for (i = 0; i<225; i++) {
                 fields[i].addEventListener("click", function() {
                     if (!this.classList.contains('filled')) {
