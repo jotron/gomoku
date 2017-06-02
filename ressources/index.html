@@ -36,6 +36,15 @@
                 playingcoop = true;
                 waiting_for_coop = false;
                 choice(4);
+                socket.on('onlinemove', function(move) {
+                    ultimatefield[move] = 2;
+                    document.getElementById('move').style.backgroundColor = color1;
+                    var winner = check(ultimatefield, move);
+                    if (winner !== 0) {
+                        declarewinner(winner);
+                        return 0;
+                    }
+                });
             } 
             else if (state == 1 && !waiting_for_coop) {
                 document.getElementById('onlinemessage').innerHTML = '</br>ready';

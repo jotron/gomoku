@@ -81,6 +81,18 @@ function PlayervsPlayer_Mode(field) {
         return 0;
     }
 }
+function Online_Mode(field) {
+    field.style.backgroundColor = color1;
+    var move = parseInt(field.id);
+    socket.emit('onlinemove', move);
+    ultimatefield[move] = 1;
+    var winner = check(ultimatefield, move);
+    if (winner !== 0) {
+        declarewinner(winner);
+        return 0;
+    }
+    return 0;
+}
 
 function check(field, play) {
     var whotries = field[play];
