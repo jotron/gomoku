@@ -3,12 +3,14 @@ var socket = io();
 var ultimatefield = new Array(225).fill(0);
 var color1 = '#6fdb78';
 var color2 = '#ffd863';
+//Anfängliche Wertetabelle mit nullscore = 7, erstellt mit Python-script
 var Qtupple_scorefield = [21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 56, 77, 98, 119, 140, 140, 140, 140, 140, 140, 140, 119, 98, 77, 56, 42, 63, 84, 105, 119, 119, 119, 119, 119, 119, 119, 105, 84, 63, 42, 35, 49, 70, 84, 98, 98, 98, 98, 98, 98, 98, 84, 70, 49, 35, 28, 42, 49, 63, 77, 77, 77, 77, 77, 77, 77, 63, 49, 42, 28, 21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28, 21];
 
 var whosturn = 1;
 function Minimax_Mode(field) {
     var move = parseInt(field.id);
-
+    
+    //Play player-move
     field.style.backgroundColor = color1;
     ultimatefield[move] = 1;
     var winner = check(ultimatefield, move);
@@ -16,8 +18,10 @@ function Minimax_Mode(field) {
         declarewinner(winner);
         return 0;
     }
-
-    var qtupple_play = Qtupple_Algorithm(move, false);
+    
+    // generate Qtupple-scorefield
+    Qtupple_Algorithm(move, false);
+    
     var play = 224;
     socket.on('minimaxanswer', function (next) {
         play = next.move;
@@ -33,19 +37,21 @@ function Minimax_Mode(field) {
         document.getElementById('wholefield').style.pointerEvents = '';
         document.getElementById('loader').style.display = 'none';
 
-        // do the Qtupple clean up
+        // generate Qtupple-scorefield with computer-move
         Qtupple_Algorithm(play, false);
         Qtupple_scorefield[play] = -1;
 
         socket.removeAllListeners();
     });
 
-    //loading button and deactivate interactions while waiting
+    //show loading button and deactivate interactions while waiting
     document.getElementById('wholefield').style.pointerEvents = 'none';
     document.getElementById('loader').style.display = 'initial';
-    socket.emit('minimaxrequest', {currentfield: ultimatefield, scorefield: Qtupple_scorefield, qplay: qtupple_play});
+    socket.emit('minimaxrequest', {currentfield: ultimatefield, scorefield: Qtupple_scorefield});
 }
 function Qtupple_Mode(field) {
+    
+    //Play player-move
     var move = parseInt(field.id);
     field.style.backgroundColor = color1;
     ultimatefield[move] = 1;
@@ -54,6 +60,8 @@ function Qtupple_Mode(field) {
         declarewinner(winner);
         return 0;
     }
+    
+    //Play Qtupple-Move
     var play = Qtupple_Algorithm(move, true);
     document.getElementById(play).classList.add('filled');
     document.getElementById(play).style.backgroundColor = color2;
@@ -107,7 +115,9 @@ function check(field, play) {
     var dr_subject = play;
     var dl_followers = 0;
     var dl_subject = play;
-
+    
+    
+    // go to diagonal start fields for check
     while (!(dr_subject%15 === 0 || dr_subject < 15)) {
         dr_subject = dr_subject - 16;
     }
@@ -129,7 +139,7 @@ function check(field, play) {
         else {
             v_followers = 0;
         }
-        //
+        // dr = diagonal-right
         if (field[dr_subject] === whotries) {
             dr_followers++;
         }
@@ -388,7 +398,7 @@ function Qtupple_Algorithm(playermove, mode) {
         }
     }
 
-    // choose randomly, only if not a minimaxrequest
+    // choose randomly best move, only if not a minimaxrequest
     var max = moves[Math.floor(Math.random() * moves.length)];
     if (mode) {
         ultimatefield[max] = 2;

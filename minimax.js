@@ -6,7 +6,8 @@ module.exports = {
         var search_depth = 1;
         var neutralgame = true;
         var priorityfield = createpriorityfield(scorefield);
-
+        
+        //variable search-depth, gradually deeper
         while (search_depth <= wanted_depth) {
             //console.log(search_depth);
             neutralgame = true;
@@ -14,6 +15,7 @@ module.exports = {
             if (!neutralgame) {
                 break;
             }
+            // if alway neutral game, play qtupple-algorithm
             else if (search_depth === wanted_depth) {
                 play = priorityfield[0];
             }
@@ -145,14 +147,14 @@ function check(field, play) {
         else {
             v_followers = 0;
         }
-        //
+        // dr = diagonal-right
         if (field[dr_subject] === whotries) {
             dr_followers++;
         }
         else {
             dr_followers = 0;
         }
-        //
+        // dl = diagonal-left
         if (field[dl_subject] === whotries) {
             dl_followers++;
         }
@@ -175,8 +177,11 @@ function check(field, play) {
     return 0;
 }
 
+// sort the qtupple-algorith-array after the best moves
 function createpriorityfield(scorefield) {
+    // fill an array with numbers from 0 to 224 in ES6 (Stackoveflow)
     var sorted = Array(225).fill().map((e,i)=>i);
+    //custom sorting function, sorting after the score of the field in the qtupple-algorithm
     sorted.sort(function (a, b) {
         return scorefield[b] - scorefield[a];
     });

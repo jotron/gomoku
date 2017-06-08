@@ -113,6 +113,8 @@
         }
 
         creategame();
+        
+        /*Disable IOS zooming (Stackoverflow)*/
         document.ontouchmove = function(e){
     		e.preventDefault();
 		}
