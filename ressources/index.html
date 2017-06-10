@@ -32,6 +32,7 @@
         socket.on('onlinestate', function (state) {
             state = state.data;
             if (state == 2 && waiting_for_coop) {
+                // Launching Online-Mode
                 document.getElementById('onlinemessage').innerHTML = '</br>Found a pair!';
                 playingcoop = true;
                 waiting_for_coop = false;
@@ -40,6 +41,7 @@
                     console.log(move);
                     ultimatefield[move] = 2;
                     document.getElementById(move).style.backgroundColor = color2;
+                    document.getElementById(move).classList.add('filled');
                     var winner = check(ultimatefield, move);
                     if (winner !== 0) {
                         declarewinner(winner);
@@ -76,7 +78,7 @@
             document.getElementById('wholefield').style.opacity = '1';
 
             /*select Mode*/
-            var moduslist = [PlayervsPlayer_Mode, Minimax_Mode, Qtupple_Algorithm, Online_Mode];
+            var moduslist = [PlayervsPlayer_Mode, Minimax_Mode, Qtupple_Mode, Online_Mode];
             var i;
             var fields = document.getElementsByClassName('field');
 
@@ -113,7 +115,7 @@
         }
 
         creategame();
-        
+
         /*Disable IOS zooming (Stackoverflow)*/
         document.ontouchmove = function(e){
     		e.preventDefault();

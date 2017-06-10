@@ -107,7 +107,6 @@ Erstens habe ich die check-Funktion stark vereinfacht und optimiert. Nun werden 
 Ich habe einen alternativen Algorithmus ausprobiert. Dieser denkt überhaupt nicht voraus, ist aber trotzdem ziemlich schwer zu schlagen.
 Kennengelernt habe ich den Algorithmus schon vor Jahren. Er ist in Emacs vorinstalliert.
 - [Algorithmusquelle](https://github.com/typester/emacs/blob/master/lisp/play/gomoku.el)
-- Algemeine [Quelle](https://web.archive.org/web/20140411074912/http://chalmersgomoku.googlecode.com/files/allis1994.pdf) die mir zum Verständniss des Spiels geholfen hat
 
 ## 04.05.17
 Heute habe ich auf dem SchulPC NodeJs installiert. Anschliessend habe ich versucht den Qtupple-Algorithmus zu korrigieren.
@@ -160,3 +159,12 @@ Zudem habe ich ein wenig Code eingespart bei der Modus-Vergabe.
 
 ## 08.06.17
 Heute habe ich grösstenteils Code kommentiert. Während der Woche hatte ich noch den Onlinemodus spielbar gemacht. Dieser hat zwar noch einige Fehler (man kann Felder 2 mal spielen + Eine 3 Person bringt alles durcheinander) aber funktioniert grundsätzlich.
+
+## *10.06.17*
+
+Heute habe ich den Code fertig kommentiert. Ich habe das kleine Problem behoben, dass man auf Felder 2 mal spielen konnte. Zudem habe ich an der Readme datei gearbeitet.
+
+## 10.06.17 - Fazit
+
+Ich bin mit dem Ergebnis des Gegner-Algorithmus grundsätzlich zufrieden. Das Design des Spiels ist meiner meinung nach auch ansprechend. 
+Was ich bereue, ist, dass man den Algorithmus immer noch unter gewissen Bedingungne schlagen kann. Hätte ich noch ein wenig Zeit würde ich versuchen dieses Konzept [*Go-Moku and Threat-Space Search*](https://web.archive.org/web/20140411074912/http://chalmersgomoku.googlecode.com/files/allis1994.pdf) zu implementieren. 

@@ -9,7 +9,7 @@ var Qtupple_scorefield = [21, 28, 35, 42, 56, 56, 56, 56, 56, 56, 56, 42, 35, 28
 var whosturn = 1;
 function Minimax_Mode(field) {
     var move = parseInt(field.id);
-    
+
     //Play player-move
     field.style.backgroundColor = color1;
     ultimatefield[move] = 1;
@@ -18,10 +18,10 @@ function Minimax_Mode(field) {
         declarewinner(winner);
         return 0;
     }
-    
+
     // generate Qtupple-scorefield
     Qtupple_Algorithm(move, false);
-    
+
     var play = 224;
     socket.on('minimaxanswer', function (next) {
         play = next.move;
@@ -50,7 +50,7 @@ function Minimax_Mode(field) {
     socket.emit('minimaxrequest', {currentfield: ultimatefield, scorefield: Qtupple_scorefield});
 }
 function Qtupple_Mode(field) {
-    
+
     //Play player-move
     var move = parseInt(field.id);
     field.style.backgroundColor = color1;
@@ -60,7 +60,7 @@ function Qtupple_Mode(field) {
         declarewinner(winner);
         return 0;
     }
-    
+
     //Play Qtupple-Move
     var play = Qtupple_Algorithm(move, true);
     document.getElementById(play).classList.add('filled');
@@ -74,9 +74,9 @@ function Qtupple_Mode(field) {
 function PlayervsPlayer_Mode(field) {
     var move = parseInt(field.id);
     if (whosturn === 1) {
-            field.style.backgroundColor = color1;
-            ultimatefield[move] = whosturn;
-            whosturn = 2;
+        field.style.backgroundColor = color1;
+        ultimatefield[move] = whosturn;
+        whosturn = 2;
     }
     else {
         field.style.backgroundColor = color2;
@@ -115,8 +115,8 @@ function check(field, play) {
     var dr_subject = play;
     var dl_followers = 0;
     var dl_subject = play;
-    
-    
+
+
     // go to diagonal start fields for check
     while (!(dr_subject%15 === 0 || dr_subject < 15)) {
         dr_subject = dr_subject - 16;
@@ -192,6 +192,8 @@ function declarewinner(winner) {
 
 function Qtupple_Algorithm(playermove, mode) {
     function evaluate(qtupple, field) {
+        /* Functin evaluates qtupple and returns score*/
+        // border function checks if qtupple is limited on side or not
         function border(player) {
             var b = 0;
             var bt = 0;
@@ -292,6 +294,7 @@ function Qtupple_Algorithm(playermove, mode) {
         }
     }
     function possible(index, add) {
+        /*Function checks diagonally if still in field or not (add14 = diagaonal left, add16 = diagonal right)*/
         var subject;
         for (var i = 0; i<4; i++) {
             subject = index + i*add;
@@ -358,7 +361,6 @@ function Qtupple_Algorithm(playermove, mode) {
             for (k=0; k<5;k++) {
                 if (Qtupple_scorefield[dr_subject+k*16] !== -1) {
                     Qtupple_scorefield[dr_subject+k*16] = Qtupple_scorefield[dr_subject+k*16] - dr_oldvalue + dr_newvalue;
-                    //document.getElementById(dr_subject+k*16).style.backgroundColor = 'GreenYellow';
                 }
             }
 
@@ -374,7 +376,6 @@ function Qtupple_Algorithm(playermove, mode) {
             for (k=0; k<5;k++) {
                 if (Qtupple_scorefield[dl_subject+k*14] !== -1) {
                     Qtupple_scorefield[dl_subject+k*14] = Qtupple_scorefield[dl_subject+k*14] - dl_oldvalue + dl_newvalue;
-                    //document.getElementById(dl_subject+k*14).style.backgroundColor = 'GreenYellow';
                 }
             }
 
@@ -383,13 +384,14 @@ function Qtupple_Algorithm(playermove, mode) {
         }
     }
 
-    // return best moves of Qtupple_scorefield
+    // update Qtupple_scorefield
     update(playermove);
     Qtupple_scorefield[playermove] = -1;
+
+    // return array with best moves of Qtupple_scorefield
     var moves = [0];
     var i;
     for (i = 0; i<225; i++) {
-        //document.getElementById(i).innerHTML = Qtupple_scorefield[i];
         if (Qtupple_scorefield[i] > Qtupple_scorefield[moves[0]]) {
             moves = [i];
         }
@@ -398,7 +400,7 @@ function Qtupple_Algorithm(playermove, mode) {
         }
     }
 
-    // choose randomly best move, only if not a minimaxrequest
+    // choose randomly best move, only if not creating Qtupple_scorefield for minimax
     var max = moves[Math.floor(Math.random() * moves.length)];
     if (mode) {
         ultimatefield[max] = 2;
@@ -408,6 +410,7 @@ function Qtupple_Algorithm(playermove, mode) {
         Qtupple_scorefield[max] = -1;
     }
 
+    //Display Qtupple_scorefield in webbrowser
     for (i = 0; i<225; i++) {
         //document.getElementById(i).innerHTML = Qtupple_scorefield[i];
     }
