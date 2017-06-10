@@ -36,14 +36,16 @@
                 document.getElementById('onlinemessage').innerHTML = '</br>Found a pair!';
                 playingcoop = true;
                 waiting_for_coop = false;
+                var already = false;
                 choice(4);
                 socket.on('onlinemove', function(move) {
-                    console.log(move);
+                    console.log("Recieved Online-Move: " + String(move));
                     ultimatefield[move] = 2;
                     document.getElementById(move).style.backgroundColor = color2;
                     document.getElementById(move).classList.add('filled');
                     var winner = check(ultimatefield, move);
-                    if (winner !== 0) {
+                    if (winner !== 0 && !already) {
+                        already = true;
                         declarewinner(winner);
                         return 0;
                     }

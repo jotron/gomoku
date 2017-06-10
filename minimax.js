@@ -6,7 +6,7 @@ module.exports = {
         var search_depth = 1;
         var neutralgame = true;
         var priorityfield = createpriorityfield(scorefield);
-        
+
         //variable search-depth, gradually deeper
         while (search_depth <= wanted_depth) {
             //console.log(search_depth);
@@ -109,8 +109,7 @@ module.exports = {
         if (play === null || play === -1) {
             console.log("Problem: play = " + String(play));
         }
-        console.log(evaluations);
-        console.log("roundover");
+        console.log("Number of evaluations: " + String(evaluations));
         return play;
     }
 };

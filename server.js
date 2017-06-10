@@ -12,7 +12,7 @@ var usersonline = 0;
 io.on('connection', function(socket){
     socket.on('minimaxrequest', function (data) {
         var i;
-        
+
         //Tests for sanity of the field-array
         var saneinput = true;
         for (i=0; i<225; i++) {
@@ -25,6 +25,7 @@ io.on('connection', function(socket){
             var play = gomoku.main(data.currentfield, data.scorefield);
             console.timeEnd('timer');
             socket.emit('minimaxanswer', { move: play });
+            console.log("------roundover-----");
         }
         else {
             console.log("insane input");
@@ -34,24 +35,24 @@ io.on('connection', function(socket){
     socket.on('coop_request', function() {
         function coopdisconnection() {
             usersonline --;
-            console.log(usersonline);
+            console.log("Users in or waiting for Online-Mode: " + String(usersonline));
         }
         usersonline ++;
-        console.log(usersonline);
+        console.log("Users in or waiting for Online-Mode: " + String(usersonline));
         socket.on('disconnect', coopdisconnection );
-        
+
         //if user clicks on another Mode while waiting for Coop
         socket.on('coop_disconnect', function() {
             coopdisconnection();
             socket.removeListener('disconnect', coopdisconnection);
         });
     });
-    
+
     //Retransmit Moves in Online-Mode
     socket.on('onlinemove', function(move) {
         socket.broadcast.emit('onlinemove', move);
     });
-    
+
     //Send number of players online every second to everyone
     setInterval(function() {
         socket.emit('onlinestate', {data: usersonline});
