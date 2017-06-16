@@ -22,3 +22,6 @@ Die Ziele sind also wie folgt:
 Das Journal zum Projekt kann man [hier](journal.md) lesen.
 Updates zum Projekt und die aktuellste Version findet man immer auf dem [Github-Repository](https://github.com/jotron/gomoku)
 
+## Setup
+
+Das Projekt läuft mit Node.js. Benötigte npm-Pakete sind socket.io, validator und express.
