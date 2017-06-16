@@ -24,4 +24,4 @@ Updates zum Projekt und die aktuellste Version findet man immer auf dem [Github-
 
 ## Setup
 
-Das Projekt läuft mit Node.js. Benötigte npm-Pakete sind *socket.io*, *validator* und *express*.
+Das Projekt läuft mit Node.js (*npm start*). Benötigte npm-Pakete sind *socket.io*, *validator* und *express*.
