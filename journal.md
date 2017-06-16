@@ -1,13 +1,12 @@
 ## 23.02.17 (Python)
 
 Heute habe ich mich entschieden das Spielfeld als Liste zu programmieren.
-
 Diese ist in vielen Fällen nämlich günstiger als eine Klasse mit Feldern als Objekten. Programmiert habe ich heute die "Feldausgabe" mittels for-schleifen und die Achsen-Beschriftungen mit Buchstaben.  
 
 ## 02.03.17 (Python)
 Heute habe ich den ganzen Input-Mechanismus programmiert. Allerdings ist mir bewusst geworden, dass es umständlich ist bei einem so grossen Feld (15x15) die Koordinaten anzugeben.  
 Deshalb steige ich auf Javascript um und programmiere das Spiel als Webseite. Ich habe noch keine Javascript-Erfahrung, beherrsche allerdings schon HTML und CSS. Bei Javascript erhoffe ich mir also eine lehrreiche Erfahrung.
-Ein weiterer Vorteil von Javascript ist, dass mein Spiel dann Cross-Platform sein wird. Das es wird wirklich "spielbar" sein.
+Ein weiterer Vorteil von Javascript ist, dass mein Spiel dann Cross-Platform sein wird. Es wird dann wirklich aktiv "spielbar" sein.
 
 ## *04.03.17*
 Damit die verbrachte Zeit mit Python nicht « umsonst » war, hole ich es zuhause nach, die Feldausgabe und den Input zu programmieren. Javascript « lerne » ich auf <a href="http://w3schools.com">w3schools.com</a>. Ich schaue einfach nach, wenn ich irgendetwas brauche. Ab und zu schaue ich auch ein paar Stackoverflow-Fragen an wenn ich nicht weiterkomme.
