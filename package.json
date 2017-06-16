@@ -5,15 +5,15 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.15.2",
-    "marked": "^0.3.6",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "validator": "^7.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {},f
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "stop": "killall node"
+    "stop": "echo \"Error: no stop specified\" && exit 1"
   },
-  "author": "",
+  "author": "Joel",
   "license": "ISC"
 }
